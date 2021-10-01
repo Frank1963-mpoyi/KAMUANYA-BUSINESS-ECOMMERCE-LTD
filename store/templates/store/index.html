@@ -7,6 +7,7 @@
     .img-fluid{
         width: 300px;
         height: 300px;
+        cursor: pointer;
     }
 </style>
 <!-- Start Products  -->
@@ -23,24 +24,16 @@
 
         <div class="row ">
             {% for product in products %}
-            <div class="col-lg-3 col-md-6 special-grid mb-5">
+            <div class="col-lg-3 col-md-6 special-grid " style="margin-bottom: 100px; ">
                 <div class="products-single fix">
                     <div class="box-img-hover">
                         <img alt="Image" class="img-fluid" src="media/{{ product.image }}">
-
-                    </div>
-                    <ul class="list-group list-group-flush">
-
-                        <li class="list-group-item ml-auto "><b>{% if product.price %}R {{ product.price }} {% else %} <del>R {{ product.price }} </del> &#160;  &#160;R {{ product.discount_price }} {% endif %}</b></li>
-                        <li class="list-group-item">{#{  }#}</li>
-                        <li class="list-group-item float-right display-5"><b>{{ product.title }}</b></li>
-
-                    </ul>
-                    <div class="card-body">
+                        <h4 class=" ml-auto mt-1"><b>{% if product.discount_price %} <del>R {{ product.price }}</del> R {{ product.discount_price }} {% else %} R {{ product.price }}  {% endif %}</b></h4>
+                        <p> {{ product.description }}</p>
+                        <h5> {{ product.title }}</h5>
                         <button class="card-link btn btn-outline-info  update-cart" data-action="add"
                                 data-product="{{ product.id }}" > Add to cart
                         </button>
-                        <a class="card-link float-right  btn btn-outline-info" href="#"> View </a>
                     </div>
                 </div>
             </div>

@@ -12,7 +12,7 @@ class Product(models.Model):
     digital                 = models.BooleanField("DIGITAL",                   default=False, blank=True, null=True)
     image                   = models.ImageField('PRODUCT IMAGE',        upload_to='photo/',        blank=True,     null=True)
 
-    description             = models.TextField('DESCRIPTION',           blank=True, null=True)
+    description             = models.TextField('DESCRIPTION',           )
     price                   = models.DecimalField('PRICE',              max_digits=19,      default=0,              decimal_places=2,  blank=True)
     discount_price          = models.DecimalField('DISCOUNTED PRICE',   max_digits=19,      default=0,              decimal_places=2,  blank=True)
     #label                   = models.CharField('LABEL',                 max_length=250,     choices=LABEL_CHOICES,  blank=True,  null=True)
