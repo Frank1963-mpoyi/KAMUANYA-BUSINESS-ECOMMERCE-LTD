@@ -59,6 +59,9 @@ class Order(models.Model):
         db_table    = 'Order'
         verbose_name_plural = 'orders'
 
+    # def __str__(self):
+    #     return self.user.username
+
     @property
     def get_cart_total(self):
         orderitems = self.orderitem_set.all()
@@ -90,6 +93,7 @@ class OrderItem(models.Model):
     user                          = models.ForeignKey(User,             verbose_name="USER",    on_delete=models.CASCADE)
     product                       = models.ForeignKey(Product,          verbose_name="PRODUCT", on_delete=models.CASCADE)
     order                         = models.ForeignKey(Order,            verbose_name="ORDER",   on_delete=models.CASCADE)
+    complete                      = models.BooleanField(default=False)
     quantity                      = models.IntegerField("QUANTITY",     default=1)
     date_added                    = models.DateTimeField("DATE ADDED",  auto_now_add= True)
 

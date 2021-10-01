@@ -1,5 +1,5 @@
 import json
-
+from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.shortcuts import render
 
@@ -17,6 +17,7 @@ def store(request):
         )
 
         items = order.orderitem_set.all()
+        print(items)
 
         cartItems = order.get_cart_items
     else:
@@ -44,21 +45,23 @@ def cart(request):
 
         items = order.orderitem_set.all()
         #print(items)
+        cartItems = order.get_cart_items
     else:
         items = []
         order = {'get_cart_total':0, 'get_cart_item': 0}
+        cartItems = order['get_cart_items']
 
-    context = {'items': items, 'order': order}
+    context = {'items': items, 'order': order, 'cartItems':cartItems}
 
     return render(request, template_name, context)
 
+
+#@csrf_exempt
 def updateitem(request):
     data = json.loads(request.body)
-    #data = json.loads(request.body.decode('utf-8'))
-    #print(data)
     productId = data['productId']
     action = data['action']
-    #print('product',productId, 'action',action)
+    print('product json ',productId, 'action',action)
 
     user = request.user
 
@@ -69,9 +72,12 @@ def updateitem(request):
     orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)# if it already exist we want to change the value not create a new one
 
     if action == 'add':
-        orderItem.quantity = ( orderItem.quantity + 1)
+        orderItem.quantity += 1
     elif action == 'remove':
-        orderItem.quantity = ( orderItem.quantity - 1)
+        orderItem.quantity -= 1
+
+    if action == 'delete':
+        orderItem.delete()
 
     orderItem.save()
 
@@ -93,10 +99,12 @@ def checkout(request):
 
         items = order.orderitem_set.all()
         #print(items)
+        cartItems = order.get_cart_items
     else:
         items = []
         order = {'get_cart_total':0, 'get_cart_item': 0}
+        cartItems = order['get_cart_items']
 
-    context = {'items': items, 'order': order}
+    context = {'items': items, 'order': order, 'cartItems':cartItems}
 
     return render(request, template_name, context)

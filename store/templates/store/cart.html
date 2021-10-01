@@ -44,15 +44,17 @@
                             <td >
                                 <p>$ {{ item.product.price }} </p>
                             </td>
-                            <td class="quantity-box"><i class="fa fa-plus chg-quantity" aria-hidden="true"></i>&nbsp; &nbsp;{{ item.quantity }}&nbsp; &nbsp; <i class="fa fa-minus chg-quantity" aria-hidden="true"></i></td>
+                            <td class="quantity-box "><i class="fa fa-plus chg-quantity update-cart pe-auto" data-action="add"
+                                data-product="{{ item.product.id }}" aria-hidden="true"></i>&nbsp; &nbsp;{{ item.quantity }}&nbsp; &nbsp; <i class="fa fa-minus chg-quantity  update-cart cursor-pointer"  data-action="remove"
+                                data-product="{{ item.product.id }}" aria-hidden="true"></i></td>
                             <td class="total-pr">
                                 <p>$ {{ item.get_total }}</p>
 
                             </td>
-                            <td class="remove-pr">
-                                <a href="#" style="color:red;">
-                                    <i class="fas fa-times"></i>
-                                </a>
+<!--                            Need to work on it to remove the -->
+                            <td class="remove-pr"  style="color:red;">
+                                    <i class="fas fa-times chg-quantity update-cart" data-action="delete"
+                                data-product="{{ item.product.id }}"></i>
                             </td>
                         </tr>
                         {% endfor %}
@@ -81,7 +83,7 @@
 
                 <div class="container float-right">
                     <a class="btn btn-outline-dark" href="{% url 'store:home' %}">&#x2190; Back to Cart</a>
-                    <a class="ml-auto btn  btn-outline-dark hvr-hover" href="{#% url 'store:checkout' %#}">Checkout</a>
+                    <a class="ml-auto btn  btn-outline-dark hvr-hover" href="{% url 'store:checkout' %}">Checkout</a>
                 </div>
                 </div>
             </div>
