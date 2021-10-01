@@ -31,7 +31,7 @@
                     </div>
                     <ul class="list-group list-group-flush">
 
-                        <li class="list-group-item ml-auto "><b>{% if product.price %}R {{ product.price }} {% else %} <del>R {{ product.price }} </del> &#160;  &#160;R {{ product.discount_price }} {% endif %}</b></li>
+                        <li class="list-group-item ml-auto "><b>{% if product.discount_price %} <del>R {{ product.price }} </del> &nbsp; &nbsp;R {{ product.discount_price }} {% else %} R {{ product.price }} {% endif %}</b></li>
                         <li class="list-group-item">{#{  }#}</li>
                         <li class="list-group-item float-right display-5"><b>{{ product.title }}</b></li>
 

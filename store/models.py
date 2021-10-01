@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth                                        import get_user_model
 # Create your models here.
+from django.shortcuts import reverse
 
 User = get_user_model()
 
@@ -28,6 +29,9 @@ class Product(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_remove_from_cart_url(self):
+        return reverse("store:remove_from_cart", kwargs={"pk": self.pk})
 
     @property
     def image_url(self):
@@ -90,12 +94,12 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
 
-    user                          = models.ForeignKey(User,             verbose_name="USER",    on_delete=models.CASCADE)
+    user                          = models.ForeignKey(User,             verbose_name="USER",    on_delete=models.CASCADE, blank=True, null=True)
     product                       = models.ForeignKey(Product,          verbose_name="PRODUCT", on_delete=models.CASCADE)
     order                         = models.ForeignKey(Order,            verbose_name="ORDER",   on_delete=models.CASCADE)
-    complete                      = models.BooleanField(default=False)
-    quantity                      = models.IntegerField("QUANTITY",     default=1)
-    date_added                    = models.DateTimeField("DATE ADDED",  auto_now_add= True)
+    complete                      = models.BooleanField(default=False, blank=True, null=True)
+    quantity                      = models.IntegerField("QUANTITY",     default=1, blank=True, null=True)
+    date_added                    = models.DateTimeField("DATE ADDED",  auto_now_add= True, blank=True, null=True)
 
     class Meta:
 
@@ -117,6 +121,16 @@ class OrderItem(models.Model):
         total = self.product.discount_price * self.quantity
 
         return total
+
+    @property
+    def get_amount_saved(self):
+        return self.get_total - self.get_total_discount_price
+
+    @property
+    def get_final_price(self):
+        if self.product.discount_price:
+            return self.get_total_discount_price
+        return self.get_total_price
 
 class ShippingAddress(models.Model):
 

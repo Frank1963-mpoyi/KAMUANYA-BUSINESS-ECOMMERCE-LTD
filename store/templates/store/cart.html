@@ -8,6 +8,9 @@
         width: 100px;
         height: 70px;
     }
+    .chg-quantity{
+    cursor: pointer;
+    }
 </style>
 <!-- Start Cart  -->
 {#<!-- <a class="btn btn-outline-dark" href="{% url 'store:home' %}">&#x2190; Back to Cart-->#}
@@ -15,8 +18,10 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
+                  <h3 class="text-center mb-3">Order summary</h3>
+                    <br>
                 <div class="table-main table-responsive  ">
-                    <table  class="table color-darker" >
+                    <table  class="table " >
                         <thead>
                         <tr>
                             <th>Images</th>
@@ -44,17 +49,20 @@
                             <td >
                                 <p>$ {{ item.product.price }} </p>
                             </td>
-                            <td class="quantity-box "><i class="fa fa-plus chg-quantity update-cart pe-auto" data-action="add"
-                                data-product="{{ item.product.id }}" aria-hidden="true"></i>&nbsp; &nbsp;{{ item.quantity }}&nbsp; &nbsp; <i class="fa fa-minus chg-quantity  update-cart cursor-pointer"  data-action="remove"
-                                data-product="{{ item.product.id }}" aria-hidden="true"></i></td>
+                            <td class="quantity-box "> <i class="fa fa-minus chg-quantity  update-cart cursor-pointer"  data-action="remove"
+                                data-product="{{ item.product.id }}" aria-hidden="true"></i>&nbsp; &nbsp; {{ item.quantity }}&nbsp;&nbsp; &nbsp;<i class="fa fa-plus chg-quantity update-cart pe-auto" data-action="add"
+                                data-product="{{ item.product.id }}" aria-hidden="true"></i> &nbsp; </td>
                             <td class="total-pr">
-                                <p>$ {{ item.get_total }}</p>
-
+                                {% if item.product.discount_price %}
+                                <p>$ {{ item.get_total_discount_price }}</p>
+                                <p class="badge badge-primary float-right"> Saving <b>R</b> {{ item.get_amount_saved }}</p>
+                                {% else %}
+                                {{ item.get_total }}
+                                {% endif %}
                             </td>
 <!--                            Need to work on it to remove the -->
                             <td class="remove-pr"  style="color:red;">
-                                    <i class="fas fa-times chg-quantity update-cart" data-action="delete"
-                                data-product="{{ item.product.id }}"></i>
+                                   <a href="{{ product.get_remove_from_cart_url }}"><i class="fas fa-times chg-quantity" ></i></a>
                             </td>
                         </tr>
                         {% endfor %}
@@ -68,7 +76,7 @@
             <div class="col-lg-8 col-sm-12"></div>
             <div class="col-lg-4 col-sm-12">
                 <div class="order-box">
-                    <h3>Order summary</h3>
+                    {#<h3>Order summary</h3>#}
                     <br>
                       <div class="d-flex">
                         <h3>Items : </h3>
@@ -77,7 +85,7 @@
                     <hr>
                     <div class="d-flex gr-total">
                         <h5>Grand Total</h5>
-                        <div class="ml-auto h5">  $ <b>{{ order.get_cart_total }}</b> </div>
+                        <div class="ml-auto h5">  $ <b>{{ items.get_final_price }}</b> </div>
                     </div>
                     <hr>
 
