@@ -1,4 +1,5 @@
 import json
+import datetime
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.shortcuts import render
@@ -108,3 +109,9 @@ def checkout(request):
     context = {'items': items, 'order': order, 'cartItems':cartItems}
 
     return render(request, template_name, context)
+
+
+def processOrder(request):
+    print("data:", request.body)
+
+    return JsonResponse("Payment submitted....", safe=False)
