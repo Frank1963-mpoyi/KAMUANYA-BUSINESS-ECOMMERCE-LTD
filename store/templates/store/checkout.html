@@ -4,9 +4,10 @@
 
 {% block content %}
 
+
 <style>
     .hidden{
-        visibility:hidden;
+    display:none;
     }
 </style>
 
@@ -15,8 +16,8 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-6 col-lg-6 mb-3">
-                <div class="checkout-address">
 
+                <div class="checkout-address" id="form-wrapper">
                     <form class="needs-validation" id="form" novalidate>
                         <div class="row" id="user-info">
                             <div class="col-md-6 mb-3">
@@ -61,23 +62,23 @@
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="firstName">First name *</label>
-                                    <input class="form-control" id="firstName" placeholder="" required
-                                           type="text" value="">
-                                    <div class="invalid-feedback"> Valid first name is required.</div>
+                                    <input class="form-control" id="firstName" placeholder="" required type="text"
+                                           value="">
                                 </div>
                             </div>
-
+                            <hr>
                         </div>
+
                         <input class="btn btn-success btn-block" id="form-button" type="submit" value="Continue">
-
                     </form>
-
-                    <div class="box-element hidden" id="payment-info">
-                        <small>Paypal Options</small>
-                        <button id="make-payment"> Make payment </button>
-                    </div>
-
                 </div>
+
+                <br>
+                <div class="box-element hidden" id="payment-info">
+                    <small>Paypal Options</small>
+                    <button id="make-payment"> Make payment</button>
+                </div>
+
             </div>
 
             <div class="col-sm-6 col-lg-6 mb-3">
@@ -97,7 +98,8 @@
                             {% for item in items %}
                             <div class="d-flex">
                                 <h5> {{ item.product.title }}</h5>
-                                <div class="ml-auto font-weight-bold display-5"> x {{ item.quantity }}&nbsp; &nbsp; &nbsp; &nbsp;
+                                <div class="ml-auto font-weight-bold display-5"> x {{ item.quantity }}&nbsp; &nbsp;
+                                    &nbsp; &nbsp;
                                     $ {{ item.product.price }}
                                 </div>
                             </div>
@@ -114,6 +116,7 @@
                                                       href="{% url 'store:cart' %}">&#x2190; Back to cart </a></div>
                 </div>
             </div>
+
         </div>
     </div>
 </div>
@@ -124,6 +127,19 @@
 
         if (shipping == "False"){
         document.getElementById("shipping-info").innerHTML = ""
+    }
+
+     if (user != 'AnonymousUser'){
+        document.getElementById('user-info').innerHTML=""
+    }
+
+    if (shipping == 'False' && user != 'AnonymousUser'){
+        // Hide entire form if user is logged in and shipping is false
+        document.getElementById('form-wrapper').classList.add('hidden');
+
+        // Show payment if logged in user wants to buy an item that does not require shipping
+        document.getElementById('payment-info').classList.remove('hidden');
+
     }
 
     var form = document.getElementById("form")
@@ -146,5 +162,3 @@
 
 </script>
 {% endblock content %}
-
-
