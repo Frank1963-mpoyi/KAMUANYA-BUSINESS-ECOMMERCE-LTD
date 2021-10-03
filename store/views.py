@@ -4,7 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.shortcuts import render
 
-from store.models import Order, Product, OrderItem
+from store.models import Order, Product, OrderItem, ShippingAddress
 
 
 def store(request):
@@ -112,6 +112,37 @@ def checkout(request):
 
 
 def processOrder(request):
-    print("data:", request.body)
+    #print("data:", request.body)
+    transaction_id = datetime.datetime.now().timestamp()
+
+    data = json.loads(request.body)
+
+    if request.user.is_authenticated:
+        user = request.user
+        order, created = Order.objects.get_or_create(user=user, complete=False)
+
+        total = float(data['form']['total'])# we need to get form value in body we stringify   body:JSON.stringify({ 'form':userFormData, 'shipping':shippingInfo})
+
+        order.transaction_id = transaction_id
+
+        if total == order.get_cart_total: # if the front end total == backend total / may be intruder can manipulate the total in front end
+            order.complete = True
+        order.save()
+
+        if order.shipping == True:
+            ShippingAddress.objects.create(
+
+                user        =user,
+                order       = order,
+                address     =data['shipping']['address'],
+                city        =data['shipping']['city'],
+                state       =data['shipping']['state'],
+                zipcode     =data['shipping']['zipcode'],
+                #date_added =data[''][''],
+            )
+
+    else:
+        pass
+
 
     return JsonResponse("Payment submitted....", safe=False)
