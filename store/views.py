@@ -22,7 +22,7 @@ def store(request):
         cartItems = order.get_cart_items
     else:
         items = []
-        order = {'get_cart_total': 0, 'get_cart_items': 0}
+        order = {'get_cart_total': 0, 'get_cart_items': 0, 'sipping':False}
         cartItems = order['get_cart_items']
 
     products = Product.objects.all().order_by("title")
@@ -48,7 +48,7 @@ def cart(request):
         cartItems = order.get_cart_items
     else:
         items = []
-        order = {'get_cart_total':0, 'get_cart_items': 0}
+        order = {'get_cart_total':0, 'get_cart_items': 0, 'sipping':False}
         cartItems = order['get_cart_items']
 
     context = {'items': items, 'order': order, 'cartItems':cartItems}
@@ -72,7 +72,7 @@ def updateitem(request):
     orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)# if it already exist we want to change the value not create a new one
 
     if action == 'add':
-        orderItem.quantity += 1
+        orderItem.quantity = (orderItem.quantity +1)
     elif action == 'remove':
         orderItem.quantity -= 1
 
@@ -102,7 +102,7 @@ def checkout(request):
         cartItems = order.get_cart_items
     else:
         items = []
-        order = {'get_cart_total':0, 'get_cart_items': 0}
+        order = {'get_cart_total':0, 'get_cart_items': 0, 'sipping':False}
         cartItems = order['get_cart_items']
 
     context = {'items': items, 'order': order, 'cartItems':cartItems}

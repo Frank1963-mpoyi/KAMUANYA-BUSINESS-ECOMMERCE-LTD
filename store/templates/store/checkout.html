@@ -4,194 +4,147 @@
 
 {% block content %}
 
+<style>
+    .hidden{
+        visibility:hidden;
+    }
+</style>
 
 <!-- Start Cart  -->
-<div class="cart-box-main mt-5" style="margin-bottom:150px">
+<div class="cart-box-main mt-5" style="margin-bottom:350px">
     <div class="container">
-
         <div class="row">
             <div class="col-sm-6 col-lg-6 mb-3">
                 <div class="checkout-address">
 
-                    <form class="needs-validation" novalidate>
-                        <div class="row">
+                    <form class="needs-validation" id="form" novalidate>
+                        <div class="row" id="user-info">
                             <div class="col-md-6 mb-3">
-                                <label for="firstName">First name *</label>
-                                <input class="form-control" id="firstName" placeholder="" required
-                                       type="text" value="">
-                                <div class="invalid-feedback"> Valid first name is required.</div>
+                                <label for="firstName"> Name </label>
+                                <input class="form-control" id="name" placeholder="" required type="text" value="">
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label for="lastName">Last name *</label>
-                                <input class="form-control" id="lastName" placeholder="" required
-                                       type="text" value="">
-                                <div class="invalid-feedback"> Valid last name is required.</div>
+                                <label for="lastName"> Email </label>
+                                <input class="form-control" id="email" placeholder="" required type="email" value="">
                             </div>
                         </div>
-
-                              <div class="title-left">
+                        <hr>
+                        <div id="shipping-info">
+                            <div class="title-left">
                                 <h3>Shipping address</h3>
-                              </div>
-                                <hr>
-                         <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="firstName">First name *</label>
-                                <input class="form-control" id="firstName" placeholder="" required
-                                       type="text" value="">
-                                <div class="invalid-feedback"> Valid first name is required.</div>
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="lastName">Last name *</label>
-                                <input class="form-control" id="lastName" placeholder="" required
-                                       type="text" value="">
-                                <div class="invalid-feedback"> Valid last name is required.</div>
-                            </div>
-                        </div>
-
-                         <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="firstName">First name *</label>
-                                <input class="form-control" id="firstName" placeholder="" required
-                                       type="text" value="">
-                                <div class="invalid-feedback"> Valid first name is required.</div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="lastName">Last name *</label>
-                                <input class="form-control" id="lastName" placeholder="" required
-                                       type="text" value="">
-                                <div class="invalid-feedback"> Valid last name is required.</div>
-                            </div>
-                        </div>
-
-                         <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="firstName">First name *</label>
-                                <input class="form-control" id="firstName" placeholder="" required
-                                       type="text" value="">
-                                <div class="invalid-feedback"> Valid first name is required.</div>
-                            </div>
-<!--                            <div class="col-md-6 mb-3">-->
-<!--                                <label for="lastName">Last name *</label>-->
-<!--                                <input class="form-control" id="lastName" placeholder="" required-->
-<!--                                       type="text" value="">-->
-<!--                                <div class="invalid-feedback"> Valid last name is required.</div>-->
-<!--                            </div>-->
-                        </div>
-
-                        <input type="submit" class="btn btn-success form-control" value="continue">
-
-
-                        {% comment %}
-                        <hr class="mb-4">
-                        <div class="title"><span>Payment</span></div>
-                        <div class="d-block my-3">
-                            <div class="custom-control custom-radio">
-                                <input checked class="custom-control-input" id="credit" name="paymentMethod"
-                                       required type="radio">
-                                <label class="custom-control-label" for="credit">Credit card</label>
-                            </div>
-                            <div class="custom-control custom-radio">
-                                <input class="custom-control-input" id="debit" name="paymentMethod" required
-                                       type="radio">
-                                <label class="custom-control-label" for="debit">Debit card</label>
-                            </div>
-                            <div class="custom-control custom-radio">
-                                <input class="custom-control-input" id="paypal" name="paymentMethod"
-                                       required
-                                       type="radio">
-                                <label class="custom-control-label" for="paypal">Paypal</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="cc-name">Name on card</label>
-                                <input class="form-control" id="cc-name" placeholder="" required
-                                       type="text"> <small
-                                    class="text-muted">Full name as displayed on card</small>
-                                <div class="invalid-feedback"> Name on card is required</div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="cc-number">Credit card number</label>
-                                <input class="form-control" id="cc-number" placeholder="" required
-                                       type="text">
-                                <div class="invalid-feedback"> Credit card number is required</div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3 mb-3">
-                                <label for="cc-expiration">Expiration</label>
-                                <input class="form-control" id="cc-expiration" placeholder="" required
-                                       type="text">
-                                <div class="invalid-feedback"> Expiration date required</div>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label for="cc-expiration">CVV</label>
-                                <input class="form-control" id="cc-cvv" placeholder="" required type="text">
-                                <div class="invalid-feedback"> Security code required</div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <div class="payment-icon">
-                                    <ul>
-                                        <li><img alt="" class="img-fluid" src="images/payment-icon/1.png">
-                                        </li>
-                                        <li><img alt="" class="img-fluid" src="images/payment-icon/2.png">
-                                        </li>
-                                        <li><img alt="" class="img-fluid" src="images/payment-icon/3.png">
-                                        </li>
-                                        <li><img alt="" class="img-fluid" src="images/payment-icon/5.png">
-                                        </li>
-                                        <li><img alt="" class="img-fluid" src="images/payment-icon/7.png">
-                                        </li>
-                                    </ul>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="firstName"> Address </label>
+                                    <input class="form-control" id="address" placeholder="" required type="text"
+                                           value="">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="lastName"> City </label>
+                                    <input class="form-control" id="city" placeholder="" required type="text" value="">
                                 </div>
                             </div>
-                        </div>
-                        <hr class="mb-1">
 
-                        {% endcomment %}
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="firstName"> State </label>
+                                    <input class="form-control" id="state" placeholder="" required type="text" value="">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="lastName">Zip Code </label>
+                                    <input class="form-control" id="zipcode" placeholder="" required type="text"
+                                           value="">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="firstName">First name *</label>
+                                    <input class="form-control" id="firstName" placeholder="" required
+                                           type="text" value="">
+                                    <div class="invalid-feedback"> Valid first name is required.</div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <input class="btn btn-success btn-block" id="form-button" type="submit" value="Continue">
+
                     </form>
+
+                    <div class="box-element hidden" id="payment-info">
+                        <small>Paypal Options</small>
+                        <button id="make-payment"> Make payment </button>
+                    </div>
+
                 </div>
             </div>
 
-
             <div class="col-sm-6 col-lg-6 mb-3">
                 <div class="row">
-
                     <div class="col-md-12 col-lg-12">
                         <div class="order-box">
                             <div class="title-left mb-3">
-                                <h3>Order Summary </h3>
+                                <h2 class="text-center"> Order Summary </h2>
                             </div>
                             <hr>
                             <div class="d-flex">
-                                <div class="font-weight-bold">Product</div>
-                                <div class="ml-auto font-weight-bold">Price</div>
+                                <h4 class="font-weight-bold">Product</h4>
+                                <h4 class="ml-auto font-weight-bold">Price</h4>
                             </div>
                             <hr class="my-1">
-                             {% for item in items %}
+
+                            {% for item in items %}
                             <div class="d-flex">
-                                <h6> {{ item.product.title }}</h6>
-                                <div class="ml-auto font-weight-bold"> x {{ item.quantity }}&nbsp; &nbsp; &nbsp; &nbsp; $ {{ item.product.price }} </div>
+                                <h5> {{ item.product.title }}</h5>
+                                <div class="ml-auto font-weight-bold display-5"> x {{ item.quantity }}&nbsp; &nbsp; &nbsp; &nbsp;
+                                    $ {{ item.product.price }}
+                                </div>
                             </div>
                             {% endfor %}
-
                             <hr>
                             <div class="d-flex gr-total">
-                                <h5>Grand Total</h5>
-                                <div class="ml-auto h5"> $ <b>{{ order.get_cart_total }} </b> </div>
+                                <h4>Grand Total</h4>
+                                <div class="ml-auto h5"> $ <b>{{ order.get_cart_total }} </b></div>
                             </div>
                             <hr>
                         </div>
                     </div>
                     <div class="col-12 float-left"><a class="ml-auto btn btn-dark"
-                                                               href="{% url 'store:cart' %}">&#x2190; Back to cart </a></div>
+                                                      href="{% url 'store:cart' %}">&#x2190; Back to cart </a></div>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 
 <!-- End Cart -->
+<script type="text/javascript">
+    var shipping = "{{ order.shipping}}"
 
+        if (shipping == "False"){
+        document.getElementById("shipping-info").innerHTML = ""
+    }
+
+    var form = document.getElementById("form")
+
+        form.addEventListener("submit", function(e) {
+        e.preventDefault()
+        console.log(" form submitted ")
+
+        document.getElementById("form-button").classList.add("hidden");
+        document.getElementById("payment-info").classList.remove("hidden")
+    }  )
+
+    document.getElementById("make-payment").addEventListener("click", function(e) {
+        submitFormData()
+    })
+
+    function submitFormData(){
+        console.log('payment button is clicked')
+    }
+
+</script>
 {% endblock content %}
+
+

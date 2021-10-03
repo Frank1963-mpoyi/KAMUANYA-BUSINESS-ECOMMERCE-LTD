@@ -82,7 +82,7 @@ class Order(models.Model):
         orderitems = self.orderitem_set.all()
 
         for i in orderitems:
-            if i.item.digital == False:
+            if i.product.digital == False:
                 shipping = True
 
         return shipping
@@ -94,7 +94,7 @@ class OrderItem(models.Model):
     product                       = models.ForeignKey(Product,          verbose_name="PRODUCT", on_delete=models.CASCADE)
     order                         = models.ForeignKey(Order,            verbose_name="ORDER",   on_delete=models.CASCADE)
     complete                      = models.BooleanField(default=False)
-    quantity                      = models.IntegerField("QUANTITY",     default=1)
+    quantity                      = models.IntegerField("QUANTITY",     default=0)
     date_added                    = models.DateTimeField("DATE ADDED",  auto_now_add= True)
 
     class Meta:
