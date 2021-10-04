@@ -2,9 +2,12 @@
 {% load static %}
 <html lang="en">
     <head>
+      {% block extra_head %} {% endblock  %}
+
+     {% include 'includes/head_link.html'  %}
 
     </head>
-        {% include 'includes/head_link.html'  %}
+
     <body>
 
 
@@ -15,6 +18,14 @@
         {% block content %}
 
         {% endblock content %}
+
+
+        <!-- extra body -->
+        {% block extra_body %}
+
+        {% endblock  %}
+
+
 
 
         {% include 'includes/footer.html'  %}

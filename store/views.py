@@ -15,7 +15,7 @@ User = get_user_model()
 
 
 def store(request):
-    template_name = 'store/index.html'
+    template_name = 'apps/store/index.html'
 
     data = carData(request)
 
@@ -29,7 +29,7 @@ def store(request):
 
 
 def cart(request):
-    template_name = 'store/cart.html'
+    template_name = 'apps/store/cart.html'
 
     data = carData(request)
 
@@ -43,10 +43,14 @@ def cart(request):
 
 
 def updateitem(request):
+
     data = json.loads(request.body)
+
     productId = data['productId']
+
     action = data['action']
-    print('product json ',productId, 'action',action)
+
+    #print('product json ',productId, 'action',action)
 
     custom = request.user.customer
 
@@ -70,7 +74,7 @@ def updateitem(request):
 
 
 def checkout(request):
-    template_name = 'store/checkout.html'
+    template_name = 'apps/store/checkout.html'
 
     data = carData(request)
 
@@ -85,7 +89,9 @@ def checkout(request):
 
 @csrf_exempt
 def processOrder(request):
+
     #print("data:", request.body)
+
     transaction_id = datetime.datetime.now().timestamp()
 
     data = json.loads(request.body)

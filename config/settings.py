@@ -38,8 +38,23 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # 3rd party app
+    # 'django.contrib.sites',  # remember to put site_id
+    #
+    # 'allauth',
+    # 'allauth.account',
+    # 'allauth.socialaccount',
+    #
+    # 'allauth.socialaccount.providers.facebook',
+    # 'allauth.socialaccount.providers.google',
+
     'store',
 ]
+
+
+LOGIN_REDIRECT_URL ='/'
+
+ACCOUNT_LOGOUT_REDIRECT_URL = '/'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -129,4 +144,14 @@ STATIC_ROOT = os.path.join(BASE_PATH, 'store/static/includes')
 MEDIA_URL   = '/media/'
 
 MEDIA_ROOT  = os.path.join(BASE_PATH, 'store/static/media')
-
+#
+#
+# ACCOUNT_EMAIL_REQUIRED = True
+# ACCOUNT_USERNAME_REQUIRED = False
+# ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
+# ACCOUNT_SESSION_REMEMBER = True
+# ACCOUNT_AUTHENTICATION_METHOD = 'email' # login with email
+# ACCOUNT_UNIQUE_EMAIL = True
+#
+#
+# SITE_ID = 1
