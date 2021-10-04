@@ -3,9 +3,12 @@ import datetime
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.shortcuts import render
+from django.contrib.auth import get_user_model
 
 from store.models import Order, Product, OrderItem, ShippingAddress
-from store.utils import cookieCart, carData
+from store.utils import cookieCart, carData, guestOrder
+
+#User = get_user_model()
 
 
 def store(request):
@@ -14,8 +17,6 @@ def store(request):
     data = carData(request)
 
     cartItems = data['cartItems']
-    # order = data['order']
-    # items = data['items']
 
     products = Product.objects.all().order_by("title")
 
@@ -46,11 +47,11 @@ def updateitem(request):
     action = data['action']
     print('product json ',productId, 'action',action)
 
-    user = request.user
+    custom = request.user.customer
 
     product = Product.objects.get(id=productId)
 
-    order, created = Order.objects.get_or_create(user=user, complete=False)
+    order, created = Order.objects.get_or_create(customer=custom, complete=False)
 
     orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)# if it already exist we want to change the value not create a new one
 
@@ -93,31 +94,33 @@ def processOrder(request):
     data = json.loads(request.body)
 
     if request.user.is_authenticated:
-        user = request.user
-        order, created = Order.objects.get_or_create(user=user, complete=False)
 
-        total = float(data['form']['total'])# we need to get form value in body we stringify   body:JSON.stringify({ 'form':userFormData, 'shipping':shippingInfo})
+        custom = request.user.customer
 
-        order.transaction_id = transaction_id
-
-        if total == order.get_cart_total: # if the front end total == backend total / may be intruder can manipulate the total in front end
-            order.complete = True
-        order.save()
-
-        if order.shipping == True:
-            ShippingAddress.objects.create(
-
-                user        =user,
-                order       = order,
-                address     =data['shipping']['address'],
-                city        =data['shipping']['city'],
-                state       =data['shipping']['state'],
-                zipcode     =data['shipping']['zipcode'],
-                #date_added =data[''][''],
-            )
+        order, created = Order.objects.get_or_create(customer=custom, complete=False)
 
     else:
-        pass
 
+        custom, order = guestOrder(request, data)
+
+    total = float(data['form']['total'])  # we need to get form value in body we stringify   body:JSON.stringify({ 'form':userFormData, 'shipping':shippingInfo})
+
+    order.transaction_id = transaction_id
+
+    if total == float(order.get_cart_total):  # if the front end total == backend total / may be intruder can manipulate the total in front end
+        order.complete = True
+    order.save()
+
+    if order.shipping == True:
+        ShippingAddress.objects.create(
+
+            customer=custom,
+            order=order,
+            address=data['shipping']['address'],
+            city=data['shipping']['city'],
+            state=data['shipping']['state'],
+            zipcode=data['shipping']['zipcode'],
+            # date_added =data[''][''],
+        )
 
     return JsonResponse("Payment submitted....", safe=False)

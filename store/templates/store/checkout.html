@@ -126,10 +126,6 @@
         if (shipping == "False"){
         document.getElementById("shipping-info").innerHTML = ""
     }
-        // I add this
-      if (user == 'AnonymousUser'){
-        document.getElementById('shipping-info').innerHTML=""
-    }
 
      if (user != 'AnonymousUser'){
         document.getElementById('user-info').innerHTML=""
@@ -213,7 +209,15 @@
     .then((response) => { return response.json() })
     .then((data) => {
         console.log("success: ", data);
+
         alert("Transaction completed");
+
+        // add cart to clear the cookie
+
+        cart = {}
+
+        document.cookie = "cart=" + JSON.stringify(cart) + ";domain=;path=/"
+
         window.location.href = "{% url 'store:home' %}"
 
     })

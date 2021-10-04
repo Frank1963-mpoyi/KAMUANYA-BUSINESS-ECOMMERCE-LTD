@@ -53,9 +53,9 @@ def  carData(request):
 
     if request.user.is_authenticated:
 
-        user = request.user
+        custom = request.user.customer
 
-        order, created = Order.objects.get_or_create(user=user, complete=False)
+        order, created = Order.objects.get_or_create(customer=custom, complete=False)
 
         items = order.orderitem_set.all()
         # print(items)
@@ -70,3 +70,27 @@ def  carData(request):
         items = cookieData['items']
 
     return {'cartItems':cartItems, 'order': order, 'items': items}
+
+
+def guestOrder(request, data):
+    print("COOKIES: ", request.COOKIES)
+
+    name = data['form']['name']
+    email = data['form']['email']
+
+    cookieData = cookieCart(request)
+
+    items = cookieData['items']
+
+    custom, created = Customer.objects.get_or_create(email=email)
+    custom.name = name
+    custom.save()
+
+    order = Order.objects.create(customer= custom, complete=False)
+
+    for item in items:
+        product = Product.objects.get(id=item['product']['id'])
+
+        orderItem = OrderItem.objects.create(product=product, order=order, quantity=item['quantity'])
+
+    return custom, order

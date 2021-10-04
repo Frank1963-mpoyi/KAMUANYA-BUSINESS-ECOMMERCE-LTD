@@ -4,7 +4,16 @@ from django.contrib.auth                                        import get_user_
 
 User = get_user_model()
 
+
 # Create your models here.
+class Customer(models.Model):
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
+
+    name = models.CharField(max_length=250, null=True, blank=True )
+    email = models.EmailField(null=True, blank=True)
+
+
 class Product(models.Model):
 
     title                   = models.CharField('TITLE' ,                max_length=120)
@@ -40,7 +49,7 @@ class Product(models.Model):
 
 class Order(models.Model):
 
-    user                        = models.ForeignKey(User, on_delete=models.CASCADE)
+    customer                     = models.ForeignKey(Customer, on_delete=models.CASCADE)
     date_ordered                = models.DateTimeField(auto_now_add= True)
     complete                    = models.BooleanField(default=False)
 
@@ -92,7 +101,7 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
 
-    user                          = models.ForeignKey(User,             verbose_name="USER",    on_delete=models.CASCADE)
+    customer                        = models.ForeignKey(Customer,             verbose_name="USER",    on_delete=models.CASCADE, null=True, blank=True)
     product                       = models.ForeignKey(Product,          verbose_name="PRODUCT", on_delete=models.CASCADE)
     order                         = models.ForeignKey(Order,            verbose_name="ORDER",   on_delete=models.CASCADE)
     complete                      = models.BooleanField(default=False)
@@ -122,7 +131,7 @@ class OrderItem(models.Model):
 
 class ShippingAddress(models.Model):
 
-    user                                = models.ForeignKey(User,           verbose_name="USER", on_delete=models.CASCADE)
+    customer                              = models.ForeignKey(Customer,           verbose_name="USER", on_delete=models.CASCADE)
     order                               = models.ForeignKey(Order,          verbose_name="ORDER", on_delete=models.CASCADE)
     address                             = models.CharField("ADDRESS",       max_length=250, null=True, blank=True)
     city                                = models.CharField("CITY",          max_length=250, null=True, blank=True)
