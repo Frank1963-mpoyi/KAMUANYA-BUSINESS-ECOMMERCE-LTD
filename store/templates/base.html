@@ -1,49 +1,25 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title> Ecom </title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" >
+    <head>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
-    <script type="text/javascript">
-        var user = "{{ request.user }}"
-
-        function getToken(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                // Does this cookie string begin with the name we want?
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
-    const csrftoken = getToken('csrftoken');
-
-    </script>
-</head>
-<body>
+    </head>
+        {% include 'includes/head_link.html'  %}
+    <body>
 
 
-{% include 'includes/navbar.html'  with  brand_name="KAMUANYA BUSINESS LTD" %}
+        {% include 'includes/navbar.html'  with  brand_name="KAMUANYA BUSINESS LTD" %}
 
 
-{% block content %}
+        {% block content %}
 
-{% endblock content %}
-
-
-{% include 'includes/footer.html'  %}
+        {% endblock content %}
 
 
-{% include 'includes/scripts.html' %}
+        {% include 'includes/footer.html'  %}
 
-</body>
+
+        {% include 'includes/scripts.html' %}
+
+    </body>
 </html>
