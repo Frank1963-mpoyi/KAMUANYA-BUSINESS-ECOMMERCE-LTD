@@ -5,31 +5,17 @@ from django.http import JsonResponse
 from django.shortcuts import render
 
 from store.models import Order, Product, OrderItem, ShippingAddress
-from store.utils import cookieCart
+from store.utils import cookieCart, carData
 
 
 def store(request):
     template_name = 'store/index.html'
 
-    if request.user.is_authenticated:
-        user = request.user
-        order, created = Order.objects.get_or_create(
-            user=user,
-            complete=False
-        )
+    data = carData(request)
 
-        items = order.orderitem_set.all()
-        print(items)
-
-        cartItems = order.get_cart_items
-    else:
-        cookieData = cookieCart(request)
-
-        cartItems = cookieData['cartItems']
-
-        # items = []
-        # order = {'get_cart_total': 0, 'get_cart_items': 0, 'sipping':False}
-        # cartItems = order['get_cart_items']
+    cartItems = data['cartItems']
+    # order = data['order']
+    # items = data['items']
 
     products = Product.objects.all().order_by("title")
 
@@ -42,23 +28,11 @@ def store(request):
 def cart(request):
     template_name = 'store/cart.html'
 
-    if request.user.is_authenticated:
-        user = request.user
-        order, created = Order.objects.get_or_create(
-            user = user,
-            complete = False
-        )
+    data = carData(request)
 
-        items = order.orderitem_set.all()
-        #print(items)
-        cartItems = order.get_cart_items
-    else:
-        cookieData = cookieCart(request)
-
-        cartItems = cookieData['cartItems']
-        order = cookieData['order']
-        items = cookieData['items']
-
+    cartItems = data['cartItems']
+    order = data['order']
+    items = data['items']
 
     context = {'items': items, 'order': order, 'cartItems':cartItems}
 
@@ -96,25 +70,16 @@ def updateitem(request):
     return JsonResponse('Item was added', safe=False)
 
 
+
+
 def checkout(request):
     template_name = 'store/checkout.html'
 
-    if request.user.is_authenticated:
-        user = request.user
-        order, created = Order.objects.get_or_create(
-            user = user,
-            complete = False
-        )
+    data = carData(request)
 
-        items = order.orderitem_set.all()
-        #print(items)
-        cartItems = order.get_cart_items
-    else:
-        cookieData = cookieCart(request)
-
-        cartItems = cookieData['cartItems']
-        order = cookieData['order']
-        items = cookieData['items']
+    cartItems = data['cartItems']
+    order = data['order']
+    items = data['items']
 
     context = {'items': items, 'order': order, 'cartItems':cartItems}
 
