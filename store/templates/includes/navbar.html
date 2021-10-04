@@ -1,6 +1,31 @@
 {% load static %}
 
 
+<div class="container-fluid p-3">
+    <div class="form-inline">
+
+        <div class="input-group input-navbar">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="icon-addon1"><span class="mai-search"></span></span>
+            </div>
+            <input class="form-control  mr-sm-2" placeholder="Enter keyword.." type="search">
+        </div>
+
+        <div class="mx-auto">
+            {% if request.user.is_authenticated %}
+            <span>Hello, {{ user.username|default:'Tshibuyi' }} ! Thanks for logging in. </span>
+            {% else %}
+            <span>Hello, {{ user.username|default:'Guest' }} ! Please log in. </span>
+            {% endif %}
+        </div>
+
+        <div class=" ml-auto">
+            <a class="nav-link " href="{% url 'store:cart' %}" style="color:red;"> <i class="fa fa-shopping-bag"></i> {{ cartItems }}</a>
+        </div>
+    </div>
+
+</div>
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top py-3 ">
     <a class="navbar-brand" href="#">{{ brand_name }}</a>
     <button aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
@@ -13,25 +38,26 @@
             <li class="nav-item active">
                 <a class="nav-link" href="{% url 'store:home' %}">Home <span class="sr-only">(current)</span></a>
             </li>
+             <li class="nav-item active">
+                <a class="nav-link" href="{% url 'store:home' %}">About Us <span class="sr-only">(current)</span></a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Contact Us</a>
             </li>
             {% if request.user.is_authenticated %}
             <li class="nav-item">
-                <a class="nav-link" href="#">logout</a>
+                <a class="nav-link" href="#"><i class="fas fa-sign-out-alt"></i> logout</a>
             </li>
             {% else %}
                <li class="nav-item">
-                <a class="nav-link" href="#">signin</a>
+                <a class="nav-link" href="#"><i class="fas fa-sign-in-alt"></i> Sign in</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">login</a>
+                <a class="nav-link" href="#"><i class="fa fa-user"></i> Login</a>
             </li>
 
             {% endif %}
-            <li class="nav-item">
-                <a class="nav-link " href="{% url 'store:cart' %}" style="color:red;"> <i class="fa fa-shopping-bag"></i> {{ cartItems }}</a>
-            </li>
+
         </ul>
     </div>
 </nav>

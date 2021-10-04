@@ -1,5 +1,7 @@
 import json
-from .models import *
+from django.contrib                                                 import messages
+
+from .models                                                        import *
 
 
 def cookieCart(request):
@@ -9,33 +11,33 @@ def cookieCart(request):
     except:
         cart = {}
 
-        # print(f"CART: {cart}")
     items = []
+
     order = {'get_cart_total': 0, 'get_cart_items': 0, 'sipping': False}
+
     cartItems = order['get_cart_items']
 
     for i in cart:
         try:
-            cartItems += cart[i]["quantity"]
-            # print('yooooo',cartItems)
+            cartItems   += cart[i]["quantity"]
 
-            product = Product.objects.get(id=i)
+            product     = Product.objects.get(id=i)
 
-            total = (product.price * cart[i]["quantity"])
+            total       = (product.price * cart[i]["quantity"])
 
             order['get_cart_total'] += total
+
             order['get_cart_items'] += cart[i]["quantity"]
 
             item = {
-
                 'product': {
-                    'id': product.id,
-                    'title': product.title,
-                    'price': product.price,
-                    'image_url': product.image_url
+                    'id'        : product.id,
+                    'title'     : product.title,
+                    'price'     : product.price,
+                    'image_url' : product.image_url
                 },
-                'quantity': cart[i]['quantity'],
-                'get_total': total,
+                'quantity'  : cart[i]['quantity'],
+                'get_total' : total,
             }
 
             items.append(item)
@@ -53,13 +55,14 @@ def  carData(request):
 
     if request.user.is_authenticated:
 
-        custom = request.user.customer
+        custom          = request.user.customer
 
-        order, created = Order.objects.get_or_create(customer=custom, complete=False)
+        order, created  = Order.objects.get_or_create(customer=custom, complete=False)
 
         items = order.orderitem_set.all()
-        # print(items)
+
         cartItems = order.get_cart_items
+
     else:
 
         cookieData = cookieCart(request)
@@ -67,15 +70,17 @@ def  carData(request):
         cartItems = cookieData['cartItems']
 
         order = cookieData['order']
+
         items = cookieData['items']
 
     return {'cartItems':cartItems, 'order': order, 'items': items}
 
 
 def guestOrder(request, data):
-    print("COOKIES: ", request.COOKIES)
+    #print("COOKIES: ", request.COOKIES)
 
     name = data['form']['name']
+
     email = data['form']['email']
 
     cookieData = cookieCart(request)

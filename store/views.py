@@ -1,14 +1,17 @@
 import json
 import datetime
-from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse
-from django.shortcuts import render
-from django.contrib.auth import get_user_model
+from django.http                                                    import JsonResponse
+from django.contrib                                                 import messages
+from django.core.paginator                                          import Paginator
+from django.views.decorators.csrf                                   import csrf_exempt
+from django.shortcuts                                               import render, redirect
+from django.contrib.auth                                            import get_user_model
 
-from store.models import Order, Product, OrderItem, ShippingAddress
-from store.utils import cookieCart, carData, guestOrder
+from store.models                                                   import Order, Product, OrderItem, ShippingAddress
+from store.utils                                                    import cookieCart, carData, guestOrder
 
-#User = get_user_model()
+
+User = get_user_model()
 
 
 def store(request):
@@ -25,7 +28,6 @@ def store(request):
     return render(request, template_name, context)
 
 
-
 def cart(request):
     template_name = 'store/cart.html'
 
@@ -40,7 +42,6 @@ def cart(request):
     return render(request, template_name, context)
 
 
-#@csrf_exempt
 def updateitem(request):
     data = json.loads(request.body)
     productId = data['productId']
@@ -60,9 +61,6 @@ def updateitem(request):
     elif action == 'remove':
         orderItem.quantity -= 1
 
-    if action == 'delete':
-        orderItem.delete()
-
     orderItem.save()
 
     if  orderItem.quantity <= 0:
@@ -71,22 +69,21 @@ def updateitem(request):
     return JsonResponse('Item was added', safe=False)
 
 
-
-
 def checkout(request):
     template_name = 'store/checkout.html'
 
     data = carData(request)
 
-    cartItems = data['cartItems']
-    order = data['order']
-    items = data['items']
+    cartItems   = data['cartItems']
+    order       = data['order']
+    items       = data['items']
 
     context = {'items': items, 'order': order, 'cartItems':cartItems}
 
     return render(request, template_name, context)
 
 
+@csrf_exempt
 def processOrder(request):
     #print("data:", request.body)
     transaction_id = datetime.datetime.now().timestamp()
@@ -112,15 +109,16 @@ def processOrder(request):
     order.save()
 
     if order.shipping == True:
+
         ShippingAddress.objects.create(
 
-            customer=custom,
-            order=order,
-            address=data['shipping']['address'],
-            city=data['shipping']['city'],
-            state=data['shipping']['state'],
-            zipcode=data['shipping']['zipcode'],
-            # date_added =data[''][''],
+            customer    = custom,
+            order       = order,
+            address     = data['shipping']['address'],
+            city        = data['shipping']['city'],
+            state       = data['shipping']['state'],
+            zipcode     = data['shipping']['zipcode'],
+
         )
 
     return JsonResponse("Payment submitted....", safe=False)
