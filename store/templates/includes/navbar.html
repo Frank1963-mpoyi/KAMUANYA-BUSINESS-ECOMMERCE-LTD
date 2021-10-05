@@ -1,6 +1,20 @@
 {% load static %}
 
 
+<style>
+
+    .bg-darker{
+        background:#70AB8F;
+    }
+
+    .brand-color  {
+         color: white;
+         font-size: 25px;
+         font-weight: 300;
+    }
+
+</style>
+
 <div class="container-fluid p-3">
     <div class="form-inline">
 
@@ -26,8 +40,8 @@
 
 </div>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top py-3 ">
-    <a class="navbar-brand" href="#">{{ brand_name }}</a>
+<nav class="navbar navbar-expand-lg navbar-dark bg-darker sticky-top py-3 ">
+    <a class=" brand-color " href="#">{{ brand_name }}</a>
     <button aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
             data-target="#navbarNav" data-toggle="collapse" type="button">
         <span class="navbar-toggler-icon"></span>
@@ -53,7 +67,7 @@
                 <a class="nav-link" href="{#% url 'account_signup' %#}"><i class="fas fa-sign-in-alt"></i> Sign in</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{#% url 'account_login' %#}"><i class="fa fa-user"></i> Login</a>
+                <a class="nav-link" href="{#% url 'account_login' %#}"><i class="fa fa-user"></i> Login </a>
             </li>
 
             {% endif %}
