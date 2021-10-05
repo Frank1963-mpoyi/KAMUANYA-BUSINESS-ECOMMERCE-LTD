@@ -1,5 +1,7 @@
 import json
 import datetime
+
+from django.db.models import Q
 from django.http                                                    import JsonResponse
 from django.contrib                                                 import messages
 from django.core.paginator                                          import Paginator
@@ -23,7 +25,28 @@ def store(request):
 
     products = Product.objects.all().order_by("title")
 
-    context = {'products': products, 'cartItems': cartItems}
+    """ Search """
+
+    q = request.GET.get("q")
+    if q != "" and q is not None:
+        products =  products.filter(
+            Q( title__icontains=q) |
+            Q(description__icontains=q)|
+            Q(price__icontains=q) |
+            Q(discount_price__icontains=q)|
+            Q(top_featured__icontains=q)|
+            Q(best_seller__icontains=q)
+        )
+
+    """ pagination """
+
+    paginator = Paginator(products , 10)
+
+    page_number = request.GET.get('page')
+
+    page_obj = paginator.get_page(page_number)
+
+    context = {'products':  page_obj, 'cartItems': cartItems}
 
     return render(request, template_name, context)
 
