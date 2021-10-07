@@ -26,22 +26,14 @@
 
 </style>
 
-<div class="container-fluid p-3">
+<div class="container-fluid p-1">
     <div class="form-inline">
 
-        {% comment %}
-        <form class="input-group input-navbar mr-auto">
+        <form class="input-group search-form mr-auto">
             <div class="input-group-prepend">
                 <span class="input-group-text" id="icon-addon1"><span class="mai-search"></span></span>
             </div>
             <input class="form-control  mr-sm-2" name="q" placeholder="Enter keyword.." type="search">
-        </form>
-        {% endcomment %}
-         <form action="#" class="search-form mr-auto">
-            <div class="form-group">
-                <input class="form-control" name="q" placeholder="Enter keyword.." type="text">
-                <button class="btn" type="submit"><span class="icon mai-search"></span></button>
-            </div>
         </form>
 
         <div class="mx-auto">
@@ -53,7 +45,7 @@
         </div>
 
         <div class=" ml-auto">
-                 <span> +27 781 114 041 </span>
+            <span> +27 781 114 041 </span>
         </div>
     </div>
 
@@ -68,24 +60,24 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
 
-            <li class="nav-item active">
+            <li class="nav-item {% if page_name == 'home' %} active {% endif %}">
                 <a class="nav-link" href="{% url 'store:home' %}">Home <span class="sr-only">(current)</span></a>
             </li>
-             <li class="nav-item active">
-                <a class="nav-link" href="{% url 'store:home' %}">About Us <span class="sr-only">(current)</span></a>
+             <li class="nav-item {% if page_name == 'about' %} active {% endif %}">
+                <a class="nav-link" href="{% url 'store:about' %}">About </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'store:contact' %}">Contact Us</a>
+            <li class="nav-item {% if page_name == 'contact' %} active {% endif %}">
+                <a class="nav-link" href="{% url 'store:contact' %}">Contact</a>
             </li>
             {% if request.user.is_authenticated %}
-            <li class="nav-item">
+            <li class="nav-item {% if page_name == 'logout' %} active {% endif %}">
                 <a class="nav-link" href="{% url 'accounts:logout' %}"><i class="fas fa-sign-out-alt"></i> logout</a>
             </li>
             {% else %}
-               <li class="nav-item">
+               <li class="nav-item {% if page_name == 'signin' %} active {% endif %}" >
                 <a class="nav-link" href="{% url 'accounts:register' %}"><i class="fas fa-sign-in-alt"></i> Sign in</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {% if page_name == 'login' %} active {% endif %}">
                 <a class="nav-link" href="{% url 'accounts:login' %}"><i class="fa fa-user"></i> Login </a>
             </li>
             {% endif %}

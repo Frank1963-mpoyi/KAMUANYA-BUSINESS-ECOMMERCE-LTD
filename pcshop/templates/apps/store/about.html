@@ -4,4 +4,53 @@
 
 {% block content %}
 
+{% include 'apps/store/_includes/banner.html' %}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 wow fadeInUp">
+            <h1 class="text-center mb-3">Welcome to Paris Collection</h1>
+            <div class="text-lg">
+                <p>Welcome to <b>Tshibuyi Clinic</b> and Health Care Center's website! Our site holds a wealth of
+                    information about the services and programs we offer for our regional community as well
+                    as general health news, a provider listing and career opportunities..</p>
+
+                <p>I believe we have an outstanding staff – physicians, clinical and support personnel – whose
+                    ultimate goal is to provide you with the best care possible in a respectful and compassionate
+                    manner.
+                    We are continually looking for new ways to be better at what we do. Please don't hesitate to let us
+                    know
+                    what we can do to make your visit to Tshibuyi Clinic and Health Care Center more comfortable.
+                    As a fundamental component of our mission statement, we allow ourselves to be guided by the needs of
+                    those we serve.
+                    As needs change, we will change.</p>
+            </div>
+        </div>
+        <div class="col-lg-10 mt-5">
+            <h1 class="text-center mb-5 wow fadeInUp">Our Staff</h1>
+            <div class="row justify-content-center">
+
+                {% for doc in queryset_doctors %}
+                <div class="col-md-6 col-lg-4 wow zoomIn">
+                    <div class="card-doctor">
+                        <div class="header">
+                            <img alt="" src="/media/{{ doc.image }}">
+                            <div class="meta">
+                                <a href="#"><span class="mai-call"></span></a>
+                                <a href="#"><span class="mai-logo-whatsapp"></span></a>
+                            </div>
+                        </div>
+                        <div class="body">
+                            <p class="text-xl mb-0">Dr. {{ doc.name }} </p>
+                            <span class="text-sm text-grey">{{ doc.job_title }}</span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock content %}

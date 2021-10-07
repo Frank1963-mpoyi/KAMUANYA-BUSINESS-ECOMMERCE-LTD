@@ -174,8 +174,10 @@ class ContactView(View):
     template_name = 'apps/store/contact.html'
 
     def get(self, request, **kwargs):
+        #
+        data = product_lib.carData(request)
 
-        #i = input_get_input(self)
+        cartItems = data['cartItems']
 
         staff = check_user.check_allowed_staff(self)
 
@@ -184,7 +186,7 @@ class ContactView(View):
         #address = get_address(self)
 
         context = {
-            #'i': i,
+            'cartItems': cartItems,
             'staff': staff,
             'page_name': 'contact',
             #'address': address,
@@ -216,3 +218,25 @@ class ContactView(View):
         }
 
         return render(request, self.template_name, context)
+
+
+class AboutView(View):
+    template_name = 'apps/store/about.html'
+
+    def get(self, request, **kwargs):
+
+        data = product_lib.carData(request)
+
+        cartItems = data['cartItems']
+
+        staff = check_user.check_allowed_staff(self)
+
+        context = {
+            'cartItems '        :cartItems ,
+            'staff'             : staff,
+            'page_name'         : 'about',
+            #'address'           : address
+        }
+
+        return render(request, self.template_name, context)
+

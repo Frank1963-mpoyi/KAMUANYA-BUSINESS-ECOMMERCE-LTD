@@ -7,7 +7,7 @@ from django.views.generic                               import View
 
 from .forms                                             import UserLoginForm, UserRegisterForm
 from .input                                             import input_post_input
-#from ..home.models                                      import Address
+from pcshop.apps.web.store.lib                                      import products as product_lib
 
 
 class UserRegisterView(View):
@@ -15,12 +15,14 @@ class UserRegisterView(View):
 
     def get(self, request, **kwargs):
 
-        #address = Address.objects.values().first()
+        data = product_lib.carData(request)
+
+        cartItems = data['cartItems']
 
         form= UserLoginForm
 
         context = {
-            #'address': address,
+            'cartItems ': cartItems,
             'register_form': UserRegisterForm,
         }
 
@@ -60,12 +62,15 @@ class UserLoginView(View):
     template_name = 'apps/accounts/login.html'
 
     def get(self, request, **kwargs):
-        #address = Address.objects.values().first()
+
+        data = product_lib.carData(request)
+
+        cartItems = data['cartItems']
 
         login_form    = UserLoginForm
 
         context = {
-            #'address': address,
+            'cartItems ': cartItems,
             'login'     : 'login',
             'login_form'    : login_form,
         }
