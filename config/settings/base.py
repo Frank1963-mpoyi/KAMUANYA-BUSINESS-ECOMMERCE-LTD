@@ -11,9 +11,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 SECRET_KEY = config("SECRET_KEY")
 
 #
-# AUTH_USER_MODEL = 'accounts.CustomUser'
-#
-# AUTHENTICATION_BACKENDS = ('config.backends.AuthBackend',)
+AUTH_USER_MODEL = 'accounts.CustomUser'
+
+AUTHENTICATION_BACKENDS = ('config.backends.AuthBackend',)
 
 # Application definition
 INSTALLED_APPS = [
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
 
     # Project app
     'pcshop.apps.web.store',
+    'pcshop.apps.web.accounts',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
