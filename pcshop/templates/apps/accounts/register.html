@@ -1,0 +1,46 @@
+{% extends  'base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+{% include 'apps/store/_includes/banner.html' %}
+
+<div class="page-section mt-5">
+    <div class="container ">
+        <h1 class="text-center wow fadeInUp"> Sign In </h1>
+
+        <form class="contact-form mt-3" method="POST">
+            {% csrf_token %}
+            <div class="row mb-3">
+                <div class="col-6 mx-auto">
+                    <h5 style="color: red;">{{ register_form.non_field_errors }}</h5>
+
+                    <label for="fullname">Fullname</label>
+                    <h6 style="color: red;">{{ register_form.errors.fullname }}</h6>
+                    {{ register_form.fullname }}
+
+                    <label for="emailAddress">Email</label>
+                    <h6 style="color: red;">{{ register_form.errors.email }}</h6>
+                    {{ register_form.email }}
+
+                    <label for="password">Password</label>
+                    <h6 style="color: red;">{{ register_form.errors.password }}</h6>
+                    {{ register_form.password }}
+
+                    <label for="password1">Confirm Password</label>
+                    <h6 style="color: red;">{{ register_form.errors.password1 }}</h6>
+                    {{ register_form.password1 }}
+                    <input type="checkbox" class="mt-3" onclick="myFunction()"> Show Password
+
+                    <button class="btn btn-outline-dark form-control  wow zoomIn mb-3" type="submit">Submit</button>
+                    <br>
+                    Do you Have an account ? Please <a href="{% url 'accounts:login' %}"> Login </a>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock content %}

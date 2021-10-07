@@ -1,18 +1,18 @@
 import os, uuid
 
-from django.conf                                        import settings
-from django.db.models.signals                           import post_save, pre_save
-from django.dispatch                                    import receiver
-from django.db                                          import models
-from django.contrib.auth.models                         import BaseUserManager, AbstractBaseUser, \
-                                                                User, PermissionsMixin
-from django.core.validators                             import RegexValidator
+from django.conf                                            import settings
+from django.db.models.signals                               import post_save, pre_save
+from django.dispatch                                        import receiver
+from django.db                                              import models
+from django.contrib.auth.models                             import BaseUserManager, AbstractBaseUser, \
+                                                                    User, PermissionsMixin
+from django.core.validators                                 import RegexValidator
 
-from rest_framework.authtoken.models                    import Token
+from rest_framework.authtoken.models                        import Token
 
-from pcshop.common.global_choices                     import USER_LEVEL, USER_TYPE
-from pcshop.core.model_mixins                         import AddressFields, AuditFields
-from pcshop.core.utils                                import randcode_gen
+from pcshop.common.global_choices                           import USER_LEVEL, USER_TYPE
+from pcshop.core.model_mixins                               import AddressFields, AuditFields
+from pcshop.core.utils                                      import randcode_gen
 
 
 USERNAME_REGEX     = '^[a-zA-Z0-9.+-]*$'
@@ -78,7 +78,7 @@ class CustomUserManager(BaseUserManager):
         super_user.user_type    = 1
         super_user.user_level   = 5
 
-        super_user.is_active    = True
+        super_user.is_active    = False
         super_user.is_staff     = True
         super_user.is_admin     = True
         super_user.is_superuser = True

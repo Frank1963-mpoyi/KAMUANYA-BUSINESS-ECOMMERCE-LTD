@@ -1,17 +1,17 @@
 from django.urls                            import path
 from django.contrib.auth                    import views as auth_views
 
-#from .views                                 import UserLoginView,  UserLogoutView, UserRegisterView
+from .views                                 import UserLoginView,  UserLogoutView, UserRegisterView
 
 
 app_name = "accounts"
 
 urlpatterns = [
     #
-    # path('register/',                   UserRegisterView.as_view(), name="register"),
-    # path('login/',                      UserLoginView.as_view(), name="login"),
-    # path('logout/',                     UserLogoutView.as_view(), name="logout"),
-    #
+    path('register/',                   UserRegisterView.as_view(), name="register"),
+    path('login/',                      UserLoginView.as_view(), name="login"),
+    path('logout/',                     UserLogoutView.as_view(), name="logout"),
+
     #
     # path('password_change/done/',
     #      auth_views.PasswordChangeDoneView.as_view(template_name='password/password_change_done.html'),

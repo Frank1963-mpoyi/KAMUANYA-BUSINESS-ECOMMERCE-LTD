@@ -9,17 +9,21 @@ from django.views.generic                                           import View
 from django.shortcuts                                               import render, redirect
 from django.contrib.auth                                            import get_user_model
 
+from pcshop.apps.web.store.forms import GetInTouchForm
 from pcshop.apps.web.store.models                                   import Order, Product, OrderItem, ShippingAddress
 from pcshop.apps.web.store.lib                                      import products as product_lib
+from pcshop.common  import user as check_user
 
 User = get_user_model()
 
 
 class HomeView(View):
-    template_name = 'apps/home/index.html'
+    template_name = 'apps/store/index.html'
 
     def get(self, request, **kwargs):
-        template_name = 'apps/store/index.html'
+
+
+        staff = check_user.check_allowed_staff(self)
 
         data = product_lib.carData(request)
 
@@ -55,22 +59,25 @@ class HomeView(View):
         page_obj = paginator.get_page(page_number)
 
         context = {'products': page_obj, 'cartItems': cartItems, 'featured_product': featured_product,
-                   'best_product': best_product}
+                   'best_product': best_product, 'staff': staff, 'page_name': 'home'}
 
-        return render(request, template_name, context)
+        return render(request, self.template_name, context)
 
 
 class AddToCartView(View):
     template_name = 'apps/store/cart.html'
 
     def get(self, request, **kwargs):
+
+        staff = check_user.check_allowed_staff(self)
+
         data = product_lib.carData(request)
 
         cartItems = data['cartItems']
         order = data['order']
         items = data['items']
 
-        context = {'items': items, 'order': order, 'cartItems':cartItems}
+        context = {'items': items, 'order': order, 'cartItems':cartItems, 'staff': staff, 'page_name': 'cart'}
 
         return render(request, self.template_name, context)
 
@@ -110,13 +117,16 @@ class CheckoutView(View):
     template_name = 'apps/store/checkout.html'
 
     def get(self, request, **kwargs):
+
+        staff = check_user.check_allowed_staff(self)
+
         data = product_lib.carData(request)
 
         cartItems   = data['cartItems']
         order       = data['order']
         items       = data['items']
 
-        context = {'items': items, 'order': order, 'cartItems':cartItems}
+        context = {'items': items, 'order': order, 'cartItems':cartItems, 'staff': staff, 'page_name': 'checkout'}
 
         return render(request, self.template_name, context)
 
@@ -158,3 +168,51 @@ class ProcessOrderView(View):
             )
 
         return JsonResponse("Payment submitted....", safe=False)
+
+
+class ContactView(View):
+    template_name = 'apps/store/contact.html'
+
+    def get(self, request, **kwargs):
+
+        #i = input_get_input(self)
+
+        staff = check_user.check_allowed_staff(self)
+
+        form = GetInTouchForm
+
+        #address = get_address(self)
+
+        context = {
+            #'i': i,
+            'staff': staff,
+            'page_name': 'contact',
+            #'address': address,
+            'form': form
+        }
+
+        return render(request, self.template_name, context)
+
+    def post(self, request, **kwargs):
+
+        form = GetInTouchForm(request.POST or None)
+
+        if form.is_valid():
+
+            GetInTouchForm()
+
+            #email = MakeAppointmentNotificationEmail(obj)
+            #email.run()
+
+            message = "Your Appointment is received successfully we send you a confirmation email"
+            messages.success(request, message)
+            return redirect(self.request.META['HTTP_REFERER'])
+
+        else:
+            messages.success(request, "Your contact details failed please try again !")
+
+        context = {
+            'form': form
+        }
+
+        return render(request, self.template_name, context)
