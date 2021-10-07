@@ -11,7 +11,7 @@ from django.contrib.auth                                            import get_u
 
 from pcshop.common.email                                            import ContactNotificationEmail
 from pcshop.apps.web.store.forms import GetInTouchForm
-from pcshop.apps.web.store.models import Order, Product, OrderItem, ShippingAddress, GetInTouch
+from pcshop.apps.web.store.models import Order, Product, OrderItem, ShippingAddress, GetInTouch, Staff
 from pcshop.apps.web.store.lib                                      import products as product_lib
 from pcshop.common  import user as check_user
 
@@ -132,7 +132,7 @@ class CheckoutView(View):
         return render(request, self.template_name, context)
 
 
-#@csrf_exempt
+
 class ProcessOrderView(View):
 
     def post(self, request, **kwargs):
@@ -232,13 +232,16 @@ class AboutView(View):
 
         cartItems = data['cartItems']
 
+        our_staffs = Staff.objects.values('id', 'name', 'job_position', 'image').\
+            order_by('id')
+
         staff = check_user.check_allowed_staff(self)
 
         context = {
             'cartItems '        :cartItems ,
             'staff'             : staff,
             'page_name'         : 'about',
-            #'address'           : address
+            'our_staffs'          : our_staffs
         }
 
         return render(request, self.template_name, context)

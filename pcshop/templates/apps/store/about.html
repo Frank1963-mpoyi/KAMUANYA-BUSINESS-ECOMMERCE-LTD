@@ -3,46 +3,50 @@
 
 
 {% block content %}
+<style>
+    .header img{
+        width: 100%;
+        height: 250px;
+    }
+</style>
 
 {% include 'apps/store/_includes/banner.html' %}
+
 
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-lg-8 wow fadeInUp">
             <h1 class="text-center mb-3">Welcome to Paris Collection</h1>
             <div class="text-lg">
-                <p>Welcome to <b>Tshibuyi Clinic</b> and Health Care Center's website! Our site holds a wealth of
-                    information about the services and programs we offer for our regional community as well
-                    as general health news, a provider listing and career opportunities..</p>
+                <p>Established in 2015, Paris Collection is a brand on the verge of becoming a household name.
+                    Worn by some of the most recognizable faces over the past two decades, Paris Collection has been
+                    constantly delivering the hottest men’s clothing trends of the time. Every Paris Collection
+                    product is designed, cut, and sewn in the heart of the Paris in France.
 
-                <p>I believe we have an outstanding staff – physicians, clinical and support personnel – whose
-                    ultimate goal is to provide you with the best care possible in a respectful and compassionate
-                    manner.
-                    We are continually looking for new ways to be better at what we do. Please don't hesitate to let us
-                    know
-                    what we can do to make your visit to Tshibuyi Clinic and Health Care Center more comfortable.
-                    As a fundamental component of our mission statement, we allow ourselves to be guided by the needs of
-                    those we serve.
-                    As needs change, we will change.</p>
+                </p>
+
+                <p>Our brand has evolved significantly over time, breaking trends and setting new ones, but one thing we have not changed is our desire to give our customers truly unique and highly fashionable clothing of the highest quality.
+
+                Our  “Paris Collection” is simple: Never stop evolving as a brand, and as human beings..</p>
             </div>
         </div>
         <div class="col-lg-10 mt-5">
             <h1 class="text-center mb-5 wow fadeInUp">Our Staff</h1>
             <div class="row justify-content-center">
 
-                {% for doc in queryset_doctors %}
+                {% for staff in our_staffs %}
                 <div class="col-md-6 col-lg-4 wow zoomIn">
                     <div class="card-doctor">
                         <div class="header">
-                            <img alt="" src="/media/{{ doc.image }}">
+                            <img alt="" src="/media/{{ staff.image }}">
                             <div class="meta">
                                 <a href="#"><span class="mai-call"></span></a>
                                 <a href="#"><span class="mai-logo-whatsapp"></span></a>
                             </div>
                         </div>
                         <div class="body">
-                            <p class="text-xl mb-0">Dr. {{ doc.name }} </p>
-                            <span class="text-sm text-grey">{{ doc.job_title }}</span>
+                            <p class="text-xl mb-0">{{ staff.name }} </p>
+                            <span class="text-sm text-grey">{{ staff.job_position }}</span>
                         </div>
                     </div>
                 </div>

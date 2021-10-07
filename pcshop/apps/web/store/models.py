@@ -172,14 +172,24 @@ class ShippingAddress(AuditFields):
 
 class GetInTouch(EmailFields):
 
-    code                = models.CharField('CODE', max_length=100, blank=False, default=get_in_touch_randcode_gen)
+    code                                = models.CharField('CODE', max_length=100, blank=False, default=get_in_touch_randcode_gen)
 
-    fullname            = models.CharField(max_length=120)
-    subject             = models.CharField(max_length=250)
-    message             = models.TextField()
+    fullname                            = models.CharField(max_length=120)
+    subject                             = models.CharField(max_length=250)
+    message                             = models.TextField()
 
     def __str__(self):
         return self.fullname
+
+class Staff(models.Model):
+    code                                = models.CharField('CODE',      max_length=100,     blank=False, default=product_randcode_gen)
+
+    name                                = models.CharField(max_length=250)
+    job_position                        = models.CharField(max_length=250)
+    image                               = models.ImageField('IMAGE', upload_to=upload_img_path, blank=True, null=True)
+
+    def __str__(self):
+        return self.name
 
 def product_pre_save_receiver(sender, instance, *args, **kwargs):
     if not instance.slug:
