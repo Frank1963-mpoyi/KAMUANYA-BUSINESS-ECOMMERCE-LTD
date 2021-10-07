@@ -11,8 +11,8 @@
 
     .img-fluid {
         width: 100%;
-        height: 18vw;
-        object-fit: cover;
+        height: 30vw;
+        /*object-fit: cover;*/
         cursor: pointer;
         border-radius: 5px;
     }
@@ -33,7 +33,7 @@
 
     }
     }
-
+/*
 .hovereffect img {
     display: block;
     position: relative;
@@ -45,7 +45,7 @@
 -webkit-transform: translate3d(0,-10%,0);
 	transform: translate3d(0,-10%,0);
 }
-
+*/
 </style>
 
 {% include 'apps/store/_includes/carousel.html' %}
@@ -65,9 +65,9 @@
             <div class="col-lg-12">
                 <div class="special-menu text-center">
                     <div class="button-group filter-button-group">
-                        <button class="active btn-outline-secondarys card-link btn" data-filter="*" > <a href="#">All</a></button>
-                        <button class="active btn-outline-secondarys card-link btn" data-filter=".top-featured"> <a href="#">Top featured</a></button>
-                        <button class="active btn-outline-secondarys card-link btn" data-filter=".best-seller"> <a href="#">Best seller</a></button>
+                        <button class="active btn-outline-secondarys card-link btn " id="all-products" data-filter="*" > All</button>
+                        <button class="active btn-outline-secondarys card-link btn" id="featured-product" data-filter=".top-featured"> Top featured</button>
+                        <button class="active btn-outline-secondarys card-link btn" id="best-product" data-filter=".best-seller"> Best seller</button>
                     </div>
                 </div>
             </div>
@@ -76,19 +76,20 @@
     </div>
 
     <div class="container">
-        <div class="row ">
+        <div class="row" id="products">
+            {#% comment %#}
             {% for product in products %}
-            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 special-grid " style="margin-bottom: 100px; ">
+            <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12 special-grid " style="margin-bottom: 100px; ">
                 <div class="products-single fix">
-                    <div class="container hovereffect">
+                    <div class="container hovereffect ">
                         <img alt="Image" class="img-fluid img-responsive" src="media/{{ product.image }}">
 
-                        <div class="justify-content-center text-center">
-                            <h4 class=" ml-auto mt-1"><b>{% if product.discount_price %}
+                        <div class="justify-content-center text-height" style="line-height: 0.5;">
+                            <p class=" ml-auto mt-1"><b>{% if product.discount_price %}
                             <del>R {{ product.price }}</del>
-                                R {{ product.discount_price }} {% else %} R {{ product.price }} {% endif %}</b></h4>
+                                R {{ product.discount_price }} {% else %} R {{ product.price }} {% endif %}</b></p>
                             <p> {{ product.description }}</p>
-                            <h5> {{ product.title }}</h5>
+                            <p> {{ product.title }}</p>
                             <button class="card-link btn btn-outline-secondarys  update-cart" data-action="add" data-product="{{ product.id }}"> Add to cart </button>
                         </div>
 
@@ -96,6 +97,7 @@
                 </div>
             </div>
             {% endfor %}
+            {#% endcomment %#}
         </div>
     </div>
 
@@ -104,5 +106,94 @@
 <!-- End Products  -->
 
 {% include  'apps/store/_includes/pagination.html'  %}
+{#% comment %#}
+<script>
 
+     const allProducts = document.getElementById('all-products')
+     const bestSeller = document.getElementById('best-product')
+     const featuredProducts = document.getElementById('featured-product')
+
+      //all product
+	   allProducts.addEventListener('click', function allProducts () {
+
+		document.getElementById('products').innerHTML = `
+		 {% for product in products   %}
+            <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12 special-grid " style="margin-bottom: 100px; ">
+                <div class="products-single fix">
+                    <div class="container hovereffect " id="products">
+                        <img alt="Image" class="img-fluid img-responsive" src="media/{{ product.image }}">
+
+                        <div class="justify-content-center text-height" style="line-height: 0.5;">
+                            <p class=" ml-auto mt-1"><b>{% if product.discount_price %}
+                            <del>R {{ product.price }}</del>
+                                R {{ product.discount_price }} {% else %} R {{ product.price }} {% endif %}</b></p>
+                            <p> {{ product.description }}</p>
+                            <p> {{ product.title }}</p>
+                            <button class="card-link btn btn-outline-secondarys  update-cart" data-action="add" data-product="{{ product.id }}"> Add to cart </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            `;
+           location.reload()
+	    });
+
+
+    // featured Products
+	featuredProducts.addEventListener('click', function featuredProducts () {
+
+		document.getElementById('products').innerHTML = `
+		 {% for product in featured_product  %}
+            <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12 special-grid " style="margin-bottom: 100px; ">
+                <div class="products-single fix">
+                    <div class="container hovereffect " id="products">
+                        <img alt="Image" class="img-fluid img-responsive" src="media/{{ product.image }}">
+
+                        <div class="justify-content-center text-height" style="line-height: 0.5;">
+                            <p class=" ml-auto mt-1"><b>{% if product.discount_price %}
+                            <del>R {{ product.price }}</del>
+                                R {{ product.discount_price }} {% else %} R {{ product.price }} {% endif %}</b></p>
+                            <p> {{ product.description }}</p>
+                            <p> {{ product.title }}</p>
+                            <button class="card-link btn btn-outline-secondarys  update-cart" data-action="add" data-product="{{ product.id }}"> Add to cart </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            `;
+
+	    });
+
+	    //best seller
+	    bestSeller.addEventListener('click', function bestSeller () {
+
+		document.getElementById('products').innerHTML = `
+		 {% for product in best_product   %}
+            <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12 special-grid " style="margin-bottom: 100px; ">
+                <div class="products-single fix">
+                    <div class="container hovereffect " id="products">
+                        <img alt="Image" class="img-fluid img-responsive" src="media/{{ product.image }}">
+
+                        <div class="justify-content-center text-height" style="line-height: 0.5;">
+                            <p class=" ml-auto mt-1"><b>{% if product.discount_price %}
+                            <del>R {{ product.price }}</del>
+                                R {{ product.discount_price }} {% else %} R {{ product.price }} {% endif %}</b></p>
+                            <p> {{ product.description }}</p>
+                            <p> {{ product.title }}</p>
+                            <button class="card-link btn btn-outline-secondarys  update-cart" data-action="add" data-product="{{ product.id }}"> Add to cart </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            `;
+	    });
+
+</script>
+{#% endcomment %#}
 {% endblock content %}

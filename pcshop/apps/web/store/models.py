@@ -1,9 +1,8 @@
 from django.db import models
 from django.contrib.auth                                        import get_user_model
-# Create your models here.
+
 
 User = get_user_model()
-
 
 # Create your models here.
 class Customer(models.Model):
@@ -21,12 +20,13 @@ class Product(models.Model):
     digital                 = models.BooleanField("DIGITAL",                   default=False, blank=True, null=True)
     image                   = models.ImageField('PRODUCT IMAGE',        upload_to='photo/',        blank=True,     null=True)
 
-    description             = models.TextField('DESCRIPTION',           )
+    description             = models.CharField('DESCRIPTION', max_length=22 ,      blank=True, null=True )
     price                   = models.DecimalField('PRICE',              max_digits=19,      default=0,              decimal_places=2,  blank=True)
     discount_price          = models.DecimalField('DISCOUNTED PRICE',   max_digits=19,      default=0,              decimal_places=2,  blank=True)
     #label                   = models.CharField('LABEL',                 max_length=250,     choices=LABEL_CHOICES,  blank=True,  null=True)
     top_featured            = models.BooleanField("TOP FEATURE",        default=False,      blank=True, null=True)
     best_seller             = models.BooleanField("BEST SELLER",        default=False,      blank=True, null=True)
+    all_product             = models.BooleanField("ALL PRODUCT",        default=False,      blank=True, null=True)
     #category                = models.ForeignKey('categories.Category',  on_delete=models.PROTECT, related_name='products_categories',       null=True)
 
     class Meta:

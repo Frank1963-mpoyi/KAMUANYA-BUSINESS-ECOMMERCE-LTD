@@ -10,8 +10,7 @@ from django.shortcuts                                               import rende
 from django.contrib.auth                                            import get_user_model
 
 from .models                                                   import Order, Product, OrderItem, ShippingAddress
-from .utils                                                    import cookieCart, carData, guestOrder
-
+from .utils import cookieCart, carData, guestOrder, get_top_featured_product, get_all_product, get_best_seller_product
 
 User = get_user_model()
 
@@ -19,11 +18,15 @@ User = get_user_model()
 def store(request):
     template_name = 'apps/store/index.html'
 
-    data = carData(request)
+    data                = carData(request)
 
-    cartItems = data['cartItems']
+    cartItems           = data['cartItems']
 
-    products = Product.objects.all().order_by("title")
+    products            = get_all_product()
+
+    featured_product    = get_top_featured_product()
+
+    best_product        = get_best_seller_product()
 
     """ Search """
 
@@ -46,7 +49,7 @@ def store(request):
 
     page_obj = paginator.get_page(page_number)
 
-    context = {'products':  page_obj, 'cartItems': cartItems}
+    context = {'products':  page_obj, 'cartItems': cartItems, 'featured_product':featured_product, 'best_product': best_product}
 
     return render(request, template_name, context)
 

@@ -1,5 +1,6 @@
 import json
 from django.contrib                                                 import messages
+from django.db.models                                   import Q
 
 from .models                                                        import *
 
@@ -99,3 +100,33 @@ def guestOrder(request, data):
         orderItem = OrderItem.objects.create(product=product, order=order, quantity=item['quantity'])
 
     return custom, order
+
+
+
+def get_top_featured_product():
+
+    featured_product = Product.objects.exclude(
+        Q(best_seller=True)
+    ).values('id','title', 'digital','image' ,'description',
+            'price','discount_price','top_featured','best_seller')
+
+    return featured_product
+
+
+def get_best_seller_product():
+
+    best_product = Product.objects.exclude(
+        Q(top_featured=True)
+    ).values('id','title', 'digital','image' ,'description',
+            'price','discount_price','top_featured','best_seller')
+
+    return best_product
+
+
+def get_all_product():
+
+    all_product = Product.objects\
+    .values('id','title', 'digital','image' ,'description',
+            'price','discount_price','top_featured','best_seller')
+
+    return all_product

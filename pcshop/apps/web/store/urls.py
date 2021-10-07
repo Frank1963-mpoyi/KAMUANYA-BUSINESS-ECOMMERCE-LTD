@@ -13,4 +13,6 @@ urlpatterns = [
     path('checkout/',                                   checkout,           name="checkout"),
     path('process_order/',                              processOrder,       name="process_order"),
 
+
+
 ]

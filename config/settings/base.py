@@ -92,6 +92,7 @@ CONFIG_DIR = os.path.join(BASE_DIR, 'config/')
 
 parser = configparser.ConfigParser()
 
+
 parser.read_file(open(os.path.join(CONFIG_DIR, 'app.ini')))
 
 #Done with postgresql
@@ -107,15 +108,14 @@ DATABASES = {
     }
 }
 
-
 # # gmail
-EMAIL_BACKEND   = config('EMAIL_BACKEND')
-EMAIL_HOST      = config('EMAIL_HOST')
-EMAIL_USE_TLS   = config('EMAIL_USE_TLS')
-EMAIL_PORT      = config('EMAIL_PORT')
-EMAIL_SENDER    = config('EMAIL_SENDER')
-#EMAIL_HOST_USER = config('EMAIL_HOST_USER')# test with registration reset
-EMAIL_PASSWORD  = config('EMAIL_PASSWORD')
+# EMAIL_BACKEND   = config('EMAIL_BACKEND')
+# EMAIL_HOST      = config('EMAIL_HOST')
+# EMAIL_USE_TLS   = config('EMAIL_USE_TLS')
+# EMAIL_PORT      = config('EMAIL_PORT')
+# EMAIL_SENDER    = config('EMAIL_SENDER')
+# #EMAIL_HOST_USER = config('EMAIL_HOST_USER')# test with registration reset
+# EMAIL_PASSWORD  = config('EMAIL_PASSWORD')
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
