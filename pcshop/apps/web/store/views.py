@@ -9,8 +9,9 @@ from django.views.generic                                           import View
 from django.shortcuts                                               import render, redirect
 from django.contrib.auth                                            import get_user_model
 
+from pcshop.common.email                                            import ContactNotificationEmail
 from pcshop.apps.web.store.forms import GetInTouchForm
-from pcshop.apps.web.store.models                                   import Order, Product, OrderItem, ShippingAddress
+from pcshop.apps.web.store.models import Order, Product, OrderItem, ShippingAddress, GetInTouch
 from pcshop.apps.web.store.lib                                      import products as product_lib
 from pcshop.common  import user as check_user
 
@@ -203,8 +204,10 @@ class ContactView(View):
 
             GetInTouchForm()
 
-            #email = MakeAppointmentNotificationEmail(obj)
-            #email.run()
+            contactform = GetInTouch.objects.create(**form.cleaned_data)
+
+            email = ContactNotificationEmail(contactform)
+            email.run()
 
             message = "Your Appointment is received successfully we send you a confirmation email"
             messages.success(request, message)

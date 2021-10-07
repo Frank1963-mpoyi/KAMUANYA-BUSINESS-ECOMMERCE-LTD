@@ -4,16 +4,16 @@ from django.conf                                            import settings
 from django.core.mail                                       import send_mail
 
 
-class MakeAppointmentNotificationEmail(Thread):
+class ContactNotificationEmail(Thread):
 
-    def __init__(self, apptment):
-        super(MakeAppointmentNotificationEmail, self).__init__()
+    def __init__(self, contactform):
+        super(ContactNotificationEmail, self).__init__()
 
-        self.apptment   = apptment
-        self.receiver   = apptment.email1
-        self.sender     = settings.EMAIL_SENDER
-        self.password   = settings.EMAIL_PASSWORD
-        self.subject    = 'Appointment Confirmation'
+        self.contactform    = contactform
+        self.receiver       = contactform.email1
+        self.sender         = settings.EMAIL_SENDER
+        self.password       = settings.EMAIL_PASSWORD
+        self.subject        = 'Confirmation Email'
 
         Thread.__init__(self)
 
@@ -22,21 +22,22 @@ class MakeAppointmentNotificationEmail(Thread):
 
     def send_appointment_notification(self):
 
-        self.name       = self.apptment.fullname
+        self.name       = self.contactform.fullname
         self.firstname  = self.name.upper()
 
         self.msg = f"""
 
             Hi, {self.firstname}.
-            Phone Number: +27781114041. 
+            Phone Number: +27 781 114 041. 
 
-            Tshibuyi Clinic has sent you appointment confirmation email to you.
+            Paris Collection send you this email to confirm that  your 
+            contact form details has been received successfully .
 
-            Should you have any question, please contact Tshibuyi Hospital.
+            Should you have any question, please contact Paris Collection.
 
             Thanks,
-            Tshibuyi Hospital,
-            Email: info@tshibuyihospital.com
+            Paris Collection,
+            Email: info@pariscollection.com
 
         """
 

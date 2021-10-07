@@ -39,3 +39,4 @@ class EmailFields(models.Model):
 
     class Meta:
         abstract = True
+

@@ -7,9 +7,10 @@ from django.db                                                      import model
 from django.contrib.auth                                            import get_user_model
 
 from pcshop.common.global_choices                                   import LABEL_CHOICES
-from pcshop.core.model_mixins                                       import AuditFields
-from pcshop.core.utils                                              import unique_slug_generator, product_randcode_gen, order_randcode_gen, orderitem_randcode_gen, \
-                                                                            shipping_randcode_gen, transaction_id_randcode_gen
+from pcshop.core.model_mixins import AuditFields, EmailFields
+from pcshop.core.utils import unique_slug_generator, product_randcode_gen, order_randcode_gen, orderitem_randcode_gen, \
+    shipping_randcode_gen, transaction_id_randcode_gen, get_in_touch_randcode_gen
+
 User = get_user_model()
 
 
@@ -167,6 +168,18 @@ class ShippingAddress(AuditFields):
     zipcode                             = models.CharField("ZIP CODE",      max_length=250, null=True, blank=True)
     date_added                          = models.DateTimeField("DATE TIME", auto_now_add=True)
 
+
+
+class GetInTouch(EmailFields):
+
+    code                = models.CharField('CODE', max_length=100, blank=False, default=get_in_touch_randcode_gen)
+
+    fullname            = models.CharField(max_length=120)
+    subject             = models.CharField(max_length=250)
+    message             = models.TextField()
+
+    def __str__(self):
+        return self.fullname
 
 def product_pre_save_receiver(sender, instance, *args, **kwargs):
     if not instance.slug:

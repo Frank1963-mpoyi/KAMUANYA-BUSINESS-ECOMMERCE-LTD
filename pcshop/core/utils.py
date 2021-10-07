@@ -84,6 +84,16 @@ def transaction_id_randcode_gen():
     return new_code
 
 
+
+def get_in_touch_randcode_gen():
+
+    date, now   = get_timenow()
+    randcode    = random.sample(digits, 4) + random.sample(ascii_uppercase, 1)
+    randcode    = (''.join(randcode))
+    new_code    = f"ptran{date}c{randcode}oin{now}i-cd"
+
+    return new_code
+
 def random_string_generator(size=10, chars=string.ascii_lowercase + string.digits):
     return ''.join(random.choice(chars) for _ in range (size))
 
