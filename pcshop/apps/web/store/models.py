@@ -1,33 +1,58 @@
-from django.db import models
-from django.contrib.auth                                        import get_user_model
+import os
+import uuid
+from django.conf                                                    import settings
+from django.core.validators                                         import RegexValidator
+from django.db.models.signals                                       import pre_save
+from django.db                                                      import models
+from django.contrib.auth                                            import get_user_model
 
-
+from pcshop.common.global_choices                                   import LABEL_CHOICES
+from pcshop.core.model_mixins                                       import AuditFields
+from pcshop.core.utils                                              import unique_slug_generator, product_randcode_gen, order_randcode_gen, orderitem_randcode_gen, \
+                                                                            shipping_randcode_gen, transaction_id_randcode_gen
 User = get_user_model()
 
-# Create your models here.
-class Customer(models.Model):
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
+def get_filename_ext(filepath):
+    base_name = os.path.basename(filepath)
+    name, ext = os.path.splitext(base_name)
 
-    name = models.CharField(max_length=250, null=True, blank=True )
-    email = models.EmailField(null=True, blank=True)
+    return name, ext
+
+def upload_img_path(instance, filename):
+    full_path       = settings.MEDIA_ROOT
+    new_filename    = instance.code
+    name, ext       = get_filename_ext(filename)
+    finale_filename = f'{new_filename}{ext}'
+
+    if os.path.exists(f"{full_path}/profiles"):
+        os.chdir(f"{full_path}/profiles")
+        for file in os.listdir("."):
+            if os.path.isfile(file) and file.startswith(f"{finale_filename}"):
+                try:
+                    os.remove(file)
+                except Exception as e:
+                    pass
+
+    return "profiles/{finale_filename}".format(new_filename=new_filename, finale_filename=finale_filename)
 
 
-class Product(models.Model):
+class Product(AuditFields):
 
-    title                   = models.CharField('TITLE' ,                max_length=120)
-    #slug                    = models.SlugField('SLUG',                  unique=True, blank=True, null=True)
-    digital                 = models.BooleanField("DIGITAL",                   default=False, blank=True, null=True)
-    image                   = models.ImageField('PRODUCT IMAGE',        upload_to='photo/',        blank=True,     null=True)
+    code                    = models.CharField('CODE',      max_length=100,     blank=False, default=product_randcode_gen)
 
-    description             = models.CharField('DESCRIPTION', max_length=22 ,      blank=True, null=True )
+    title                   = models.CharField('TITLE' ,     max_length=120)
+    slug                    = models.SlugField('SLUG',       unique=True, blank=True,   null=True)
+    digital                 = models.BooleanField("DIGITAL", default=False,  blank=True, null=True)
+    image                   = models.ImageField('IMAGE',     upload_to=upload_img_path, blank=True, null=True)
+
+    description             = models.CharField('DESCRIPTION',           max_length=250 ,     blank=True, null=True )
     price                   = models.DecimalField('PRICE',              max_digits=19,      default=0,              decimal_places=2,  blank=True)
     discount_price          = models.DecimalField('DISCOUNTED PRICE',   max_digits=19,      default=0,              decimal_places=2,  blank=True)
-    #label                   = models.CharField('LABEL',                 max_length=250,     choices=LABEL_CHOICES,  blank=True,  null=True)
+    label                   = models.CharField('LABEL',                 max_length=250,     choices=LABEL_CHOICES,  blank=True,  null=True)
     top_featured            = models.BooleanField("TOP FEATURE",        default=False,      blank=True, null=True)
     best_seller             = models.BooleanField("BEST SELLER",        default=False,      blank=True, null=True)
-    all_product             = models.BooleanField("ALL PRODUCT",        default=False,      blank=True, null=True)
-    #category                = models.ForeignKey('categories.Category',  on_delete=models.PROTECT, related_name='products_categories',       null=True)
+    category                = models.ForeignKey('self',   on_delete=models.PROTECT, related_name='products_categories', blank=True,  null=True)
 
     class Meta:
 
@@ -47,14 +72,14 @@ class Product(models.Model):
         return url
 
 
-class Order(models.Model):
+class Order(AuditFields):
 
-    customer                     = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    date_ordered                = models.DateTimeField(auto_now_add= True)
+    code                        = models.CharField('CODE', max_length=100, blank=False, default=order_randcode_gen)
+    transaction_id              = models.CharField(max_length=120,  blank=True, default=transaction_id_randcode_gen)
+
     complete                    = models.BooleanField(default=False)
 
-    transaction_id              = models.CharField(max_length=120, blank=True, null=True)
-
+    customer                    = models.ForeignKey(User, on_delete=models.CASCADE)
     address                     = models.CharField(max_length=120, blank=True, null=True)
     payment                     = models.CharField(max_length=120, blank=True, null=True)
     coupon                      = models.CharField(max_length=120, blank=True, null=True)
@@ -99,15 +124,15 @@ class Order(models.Model):
         return shipping
 
 
-class OrderItem(models.Model):
+class OrderItem(AuditFields):
 
-    customer                      = models.ForeignKey(Customer,             verbose_name="USER",    on_delete=models.CASCADE, null=True, blank=True)
+    code                          = models.CharField('CODE', max_length=100, blank=False, default=orderitem_randcode_gen)
+
+    customer                      = models.ForeignKey(User,             verbose_name="USER",    on_delete=models.CASCADE, null=True, blank=True)
     product                       = models.ForeignKey(Product,          verbose_name="PRODUCT", on_delete=models.CASCADE)
     order                         = models.ForeignKey(Order,            verbose_name="ORDER",   on_delete=models.CASCADE)
     complete                      = models.BooleanField(default=False)
     quantity                      = models.IntegerField("QUANTITY",     default=0)
-    date_added                    = models.DateTimeField("DATE ADDED",  auto_now_add= True)
-
     class Meta:
 
         app_label   = 'store'
@@ -129,12 +154,21 @@ class OrderItem(models.Model):
 
         return total
 
-class ShippingAddress(models.Model):
 
-    customer                            = models.ForeignKey(Customer,           verbose_name="USER", on_delete=models.CASCADE)
+class ShippingAddress(AuditFields):
+
+    code                                = models.CharField('CODE', max_length=100, blank=False, default=shipping_randcode_gen)
+
+    customer                            = models.ForeignKey(User,       verbose_name="USER", on_delete=models.CASCADE)
     order                               = models.ForeignKey(Order,          verbose_name="ORDER", on_delete=models.CASCADE)
     address                             = models.CharField("ADDRESS",       max_length=250, null=True, blank=True)
     city                                = models.CharField("CITY",          max_length=250, null=True, blank=True)
     state                               = models.CharField("STATE",         max_length=250, null=True, blank=True)
     zipcode                             = models.CharField("ZIP CODE",      max_length=250, null=True, blank=True)
     date_added                          = models.DateTimeField("DATE TIME", auto_now_add=True)
+
+
+def product_pre_save_receiver(sender, instance, *args, **kwargs):
+    if not instance.slug:
+        instance.slug = unique_slug_generator(instance)
+pre_save.connect(product_pre_save_receiver, sender=Product)

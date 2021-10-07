@@ -4,4 +4,44 @@
 
 {% block content %}
 
-{% endblock content %}
+{% include 'apps/store/_includes/banner.html' %}
+
+<div class="page-section mt-5 mb-5">
+    <div class="container">
+        <h1 class="text-center wow fadeInUp">Get in Touch</h1>
+
+        <form class="contact-form mt-5" method="POST" novalidate autocomplete="off">
+            {% csrf_token %}
+
+            <div class="row mb-3">
+                <div class="col-sm-6 py-2 wow fadeInLeft">
+                    <label for="fullName"> Name</label>
+                     <h6 style="color:red;">{{ form.errors.fullname }}</h6>
+                    {{ form.fullname }}
+                </div>
+                <div class="col-sm-6 py-2 wow fadeInRight">
+                    <label for="emailAddress">Email</label>
+                     <h6 style="color:red;">{{ form.errors.email1 }}</h6>
+                    {{ form.email1}}
+                </div>
+                <div class="col-12 py-2 wow fadeInUp">
+                    <label for="subject">Subject</label>
+                     <h6 style="color:red;">{{ form.errors.subject }}</h6>
+                    {{ form.subject }}
+                </div>
+                <div class="col-12 py-2 wow fadeInUp">
+                    <label for="message">Message</label>
+                     <h6 style="color:red;">{{ form.errors.message }}</h6>
+                    {{ form.message }}
+                </div>
+            </div>
+            <button class="btn btn-outline-dark wow zoomIn" type="submit">Send Message</button>
+        </form>
+    </div>
+</div>
+
+<div class="maps-container wow fadeInUp ">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d7184344.349999687!2d24.7!3d-28.45!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sza!4v1631255830861!5m2!1sen!2sza" width="100%" height="370" style="border:0; margin-bottom:-60px;" allowfullscreen="" loading="lazy"></iframe>
+    <div id="google-maps"></div>
+</div>
+{% endblock content %}}

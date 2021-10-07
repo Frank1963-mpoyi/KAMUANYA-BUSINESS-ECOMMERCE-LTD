@@ -1,0 +1,40 @@
+{% extends  'base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+{% include 'apps/store/_includes/banner.html' %}
+
+<div class="page-section mt-5">
+    <div class="container ">
+        <h1 class="text-center wow fadeInUp"> Login </h1>
+
+        <form class="contact-form mt-3" method="POST">
+            {% csrf_token %}
+            <div class="row mb-3">
+                <div class="col-6 mx-auto">
+
+                    <label for="emailAddress">Email</label>
+                    <h6 style="color: red;">{{ login_form.errors.email }}</h6>
+                    {{ login_form.email }}
+
+
+                    <label for="password">Password</label>
+                    <h6 style="color: red;">{{ login_form.errors.password }}</h6>
+                    {{ login_form.password }}
+
+                    <input type="checkbox" class="mb-3 mt-3" onclick="myFunction()"> Show Password </input><br>
+
+                    <button class="btn btn-outline-dark form-control  wow zoomIn mb-3" type="submit">Submit</button>
+                    <br>
+                    Don't Have an account ? Please <a href="{% url 'accounts:register' %}">Register</a><br>
+                    Forget password ? <a href="{#% url 'accounts:password_reset' %#}"> Reset password </a>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock content %}
