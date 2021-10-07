@@ -46,7 +46,7 @@ class Product(AuditFields):
     digital                 = models.BooleanField("DIGITAL", default=False,  blank=True, null=True)
     image                   = models.ImageField('IMAGE',     upload_to=upload_img_path, blank=True, null=True)
 
-    description             = models.CharField('DESCRIPTION',           max_length=22 ,     blank=True, null=True )
+    description             = models.CharField('DESCRIPTION',           max_length=250 ,     blank=True, null=True )
     price                   = models.DecimalField('PRICE',              max_digits=19,      default=0,              decimal_places=2,  blank=True)
     discount_price          = models.DecimalField('DISCOUNTED PRICE',   max_digits=19,      default=0,              decimal_places=2,  blank=True)
     label                   = models.CharField('LABEL',                 max_length=250,     choices=LABEL_CHOICES,  blank=True,  null=True)
