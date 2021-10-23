@@ -162,3 +162,5 @@ MEDIA_URL   = '/media/'
 MEDIA_ROOT  = os.path.join(BASE_PATH, 'pcshop/static/media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
+DJANGO_SETTINGS_MODULE = 'config.settings.prod'
