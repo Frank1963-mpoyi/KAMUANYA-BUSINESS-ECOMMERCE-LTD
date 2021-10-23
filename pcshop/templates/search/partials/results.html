@@ -1,0 +1,11 @@
+<!-- SHOW ALL THE RESULTS  -->
+{% for object in queryset %}
+    <li>
+        <a href="{{ object.get_absolute_url }}">{{ object.name }}</a>
+    </li>
+
+{% empty %}
+
+<li> No results found </li>
+
+{% endfor %}

@@ -1,7 +1,4 @@
 import json
-import datetime
-
-from django.db.models                                               import Q
 from django.http                                                    import JsonResponse
 from django.contrib                                                 import messages
 from django.core.paginator                                          import Paginator
@@ -10,10 +7,11 @@ from django.shortcuts                                               import rende
 from django.contrib.auth                                            import get_user_model
 
 from pcshop.common.email                                            import ContactNotificationEmail
-from pcshop.apps.web.store.forms import GetInTouchForm
-from pcshop.apps.web.store.models import Order, Product, OrderItem, ShippingAddress, GetInTouch, Staff
+from pcshop.apps.web.store.forms                                    import GetInTouchForm
+from pcshop.apps.web.store.models                                   import Order, Product, OrderItem, ShippingAddress, GetInTouch, Staff
 from pcshop.apps.web.store.lib                                      import products as product_lib
-from pcshop.common  import user as check_user
+from pcshop.common                                                  import user as check_user
+from pcshop.apps.web.store.input                                    import input_get_input
 
 User = get_user_model()
 
@@ -23,41 +21,27 @@ class HomeView(View):
 
     def get(self, request, **kwargs):
 
+        i           = input_get_input(self)
 
-        staff = check_user.check_allowed_staff(self)
+        staff       = check_user.check_allowed_staff(self)
 
-        data = product_lib.carData(request)
+        data        = product_lib.carData(request)
 
-        cartItems = data['cartItems']
+        cartItems   = data['cartItems']
 
-        products = product_lib.get_all_product()
+        products    = product_lib.get_all_product()
 
-        featured_product = product_lib.get_top_featured_product()
+        featured_product    = product_lib.get_top_featured_product()
 
-        best_product = product_lib.get_best_seller_product()
+        best_product        = product_lib.get_best_seller_product()
 
-        """ Search """
+        # for serach view
+        #products    = products.search(query=i['query'])
 
-        q = request.GET.get("q")
-        if q != "" and q is not None:
-            products = products.filter(
-
-                Q(title__icontains=q) |
-                Q(description__icontains=q) |
-                Q(price__icontains=q) |
-                Q(discount_price__icontains=q) |
-                Q(top_featured__icontains=q) |
-                Q(best_seller__icontains=q)
-
-            )
-
-        """ pagination """
-
-        paginator = Paginator(products, 10)
-
+        #pagination
+        paginator   = Paginator(products, 10)
         page_number = request.GET.get('page')
-
-        page_obj = paginator.get_page(page_number)
+        page_obj    = paginator.get_page(page_number)
 
         context = {'products': page_obj, 'cartItems': cartItems, 'featured_product': featured_product,
                    'best_product': best_product, 'staff': staff, 'page_name': 'home'}
@@ -70,13 +54,13 @@ class AddToCartView(View):
 
     def get(self, request, **kwargs):
 
-        staff = check_user.check_allowed_staff(self)
+        staff       = check_user.check_allowed_staff(self)
 
-        data = product_lib.carData(request)
+        data        = product_lib.carData(request)
 
-        cartItems = data['cartItems']
-        order = data['order']
-        items = data['items']
+        cartItems   = data['cartItems']
+        order   = data['order']
+        items   = data['items']
 
         context = {'items': items, 'order': order, 'cartItems':cartItems, 'staff': staff, 'page_name': 'cart'}
 
@@ -87,24 +71,26 @@ class UpdateItemView(View):
 
     def post(self, request, **kwargs):
 
-        data = json.loads(self.request.body)
+        data        = json.loads(self.request.body)
 
-        productId = data['productId']
+        productId   = data['productId']
 
-        action = data['action']
+        action      = data['action']
 
-        custom = request.user
+        custom      = request.user
 
-        product = Product.objects.get(id=productId)
+        product     = Product.objects.get(id=productId)
 
-        order, created = Order.objects.get_or_create(customer=custom, complete=False)
+        order, created      = Order.objects.get_or_create(customer=custom, complete=False)
 
-        orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)# if it already exist we want to change the value not create a new one
+        orderItem, created  = OrderItem.objects.get_or_create(order=order, product=product)# if it already exist we want to change the value not create a new one
 
         if action == 'add':
             orderItem.quantity = (orderItem.quantity +1)
         elif action == 'remove':
             orderItem.quantity -= 1
+        elif action == 'delete':
+            orderItem.quantity.delete()
 
         orderItem.save()
 
@@ -119,9 +105,9 @@ class CheckoutView(View):
 
     def get(self, request, **kwargs):
 
-        staff = check_user.check_allowed_staff(self)
+        staff       = check_user.check_allowed_staff(self)
 
-        data = product_lib.carData(request)
+        data        = product_lib.carData(request)
 
         cartItems   = data['cartItems']
         order       = data['order']
@@ -141,9 +127,9 @@ class ProcessOrderView(View):
 
         if request.user.is_authenticated:
 
-            custom = self.request.user
+            custom          = self.request.user
 
-            order, created = Order.objects.get_or_create(customer=custom, complete=False)
+            order, created  = Order.objects.get_or_create(customer=custom, complete=False)
 
         else:
 
@@ -175,14 +161,14 @@ class ContactView(View):
     template_name = 'apps/store/contact.html'
 
     def get(self, request, **kwargs):
-        #
-        data = product_lib.carData(request)
-
-        cartItems = data['cartItems']
 
         staff = check_user.check_allowed_staff(self)
 
-        form = GetInTouchForm
+        data        = product_lib.carData(request)
+
+        cartItems   = data['cartItems']
+
+        form        = GetInTouchForm
 
         #address = get_address(self)
 
@@ -246,3 +232,14 @@ class AboutView(View):
 
         return render(request, self.template_name, context)
 
+def search_view(request):
+    template_name= 'search/results-views.html'
+    query= request.GET.get('q')
+
+    context ={"query": query}
+
+    # if request.GET:
+    #     template_name = 'search/partials/results.html'
+        #return render(request, template_name, context)
+
+    return render(request, template_name, context)

@@ -4,6 +4,7 @@ def input_get_input(self):
 
     i = {
         'user' : self.request.user,
+        'query': _i.get('q')
     }
 
     return i

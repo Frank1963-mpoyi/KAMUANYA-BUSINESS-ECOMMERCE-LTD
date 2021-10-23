@@ -46,7 +46,6 @@
 
                 var productId = this.dataset.product
                 var action = this.dataset.action
-                    console.log('product:', productId, 'action:',action)
 
                 if (user == 'AnonymousUser'){
                     addCookieItem(productId, action)
@@ -59,7 +58,6 @@
     //function for Cookie
 
     function addCookieItem(productId, action) {
-        console.log("User is not authenticated")
 
         //add
         if (action == "add"){
@@ -78,20 +76,17 @@
             cart[productId]["quantity"] -= 1
 
             if (cart[productId]["quantity"] <=0){
-            console.log("Item should be deleted")
 
             delete cart[productId];
 
             }
-
         }
-        console.log("Cart", cart)
+
         document.cookie = "cart=" + JSON.stringify(cart) + ";domain=;path=/"
         location.reload()
     }
 
     function updateUserOder(productId , action ){
-        console.log(" user is  authenticated")
 
         var url='/update/'
 

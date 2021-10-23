@@ -1,41 +1,15 @@
-import os
-import uuid
-from django.conf                                                    import settings
-from django.core.validators                                         import RegexValidator
 from django.db.models.signals                                       import pre_save
 from django.db                                                      import models
 from django.contrib.auth                                            import get_user_model
 
+from pcshop.common.upload_images                                    import upload_img_path
 from pcshop.common.global_choices                                   import LABEL_CHOICES
-from pcshop.core.model_mixins import AuditFields, EmailFields
-from pcshop.core.utils import unique_slug_generator, product_randcode_gen, order_randcode_gen, orderitem_randcode_gen, \
-    shipping_randcode_gen, transaction_id_randcode_gen, get_in_touch_randcode_gen
+from pcshop.common.search                                           import ProductsManager
+from pcshop.core.model_mixins                                       import AuditFields, EmailFields
+from pcshop.core.utils                                              import unique_slug_generator, product_randcode_gen, order_randcode_gen, orderitem_randcode_gen, \
+                                                                            shipping_randcode_gen, transaction_id_randcode_gen, get_in_touch_randcode_gen
 
 User = get_user_model()
-
-
-def get_filename_ext(filepath):
-    base_name = os.path.basename(filepath)
-    name, ext = os.path.splitext(base_name)
-
-    return name, ext
-
-def upload_img_path(instance, filename):
-    full_path       = settings.MEDIA_ROOT
-    new_filename    = instance.code
-    name, ext       = get_filename_ext(filename)
-    finale_filename = f'{new_filename}{ext}'
-
-    if os.path.exists(f"{full_path}/profiles"):
-        os.chdir(f"{full_path}/profiles")
-        for file in os.listdir("."):
-            if os.path.isfile(file) and file.startswith(f"{finale_filename}"):
-                try:
-                    os.remove(file)
-                except Exception as e:
-                    pass
-
-    return "profiles/{finale_filename}".format(new_filename=new_filename, finale_filename=finale_filename)
 
 
 class Product(AuditFields):
@@ -55,6 +29,7 @@ class Product(AuditFields):
     best_seller             = models.BooleanField("BEST SELLER",        default=False,      blank=True, null=True)
     category                = models.ForeignKey('self',   on_delete=models.PROTECT, related_name='products_categories', blank=True,  null=True)
 
+    objects                 = ProductsManager()
     class Meta:
 
         app_label   = 'store'

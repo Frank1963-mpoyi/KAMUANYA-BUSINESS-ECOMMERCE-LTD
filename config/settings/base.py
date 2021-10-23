@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'django_user_agents',
     'dal',
     'dal_select2',
+    "django_htmx",
 
     # Project app
     'pcshop.apps.web.store',
@@ -66,6 +67,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    "django_htmx.middleware.HtmxMiddleware",
 ]
 
 ROOT_URLCONF = 'config.urls'
