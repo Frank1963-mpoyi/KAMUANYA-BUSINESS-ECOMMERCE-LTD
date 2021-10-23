@@ -151,7 +151,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 BASE_PATH = os.path.join(BASE_DIR)
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'pcshop/static')]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'pcshop/static/store')]
 
 STATIC_URL  = '/static/'
 

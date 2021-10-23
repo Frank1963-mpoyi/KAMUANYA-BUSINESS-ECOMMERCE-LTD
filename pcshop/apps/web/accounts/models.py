@@ -78,7 +78,7 @@ class CustomUserManager(BaseUserManager):
         super_user.user_type    = 1
         super_user.user_level   = 5
 
-        super_user.is_active    = False
+        super_user.is_active    = True
         super_user.is_staff     = True
         super_user.is_admin     = True
         super_user.is_superuser = True

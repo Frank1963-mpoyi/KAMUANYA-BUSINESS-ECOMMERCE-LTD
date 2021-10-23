@@ -36,15 +36,15 @@ DATABASES['default'].update(prod_db)
 # Static files (CSS, JavaScript, Images)
 BASE_PATH = os.path.join(BASE_DIR)
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'pcshop/store/static')]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'pcshop/static')]
 
 STATIC_URL  = '/static/'
 
-STATIC_ROOT = os.path.join(BASE_PATH, 'pcshop/store/static/includes')
+STATIC_ROOT = os.path.join(BASE_PATH, 'pcshop/static/includes')
 
 MEDIA_URL   = '/media/'
 
-MEDIA_ROOT  = os.path.join(BASE_PATH, 'pcshop/store/static/media')
+MEDIA_ROOT  = os.path.join(BASE_PATH, 'pcshop/static/media')
 
 STATICFILES_STORAGE     = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
