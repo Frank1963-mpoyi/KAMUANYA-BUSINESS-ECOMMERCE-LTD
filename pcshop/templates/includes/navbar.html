@@ -24,9 +24,41 @@
 
     }
 
+@media (min-width: 769px) and (max-width: 992px) {
+  .navbar-expand-lg .brand-color{
+     font-size: 55px;
+  }
+
+  .text-top{
+   font-size: 35px;
+    display: inline;
+    font-weight: 500;
+
+  }
+
+  .form-control{
+   font-size: 35px;
+     font-weight: 500;
+  }
+
+  .nav-item a {
+    font-size: 40px;
+    text-align: center;
+  }
+
+  .navbar-toggler-icon{
+   font-size: 40px;
+
+  }
+
+  .sm-hidden{
+    display: none;
+  }
+}
+
 </style>
 
-<div class="container-fluid p-1">
+<div class="container-fluid p-1 text-top">
     <div class="form-inline">
 
         <form class="input-group search-form mr-auto">
@@ -36,7 +68,7 @@
             <input class="form-control  mr-sm-2" name="q" placeholder="Enter keyword.." type="search">
         </form>
 
-        <div class="mx-auto">
+        <div class="mx-auto sm-hidden">
             {% if request.user.is_authenticated %}
             <span>Hello, {{ user.username|default:'Tshibuyi' }} ! Thanks for logging in. </span>
             {% else %}
