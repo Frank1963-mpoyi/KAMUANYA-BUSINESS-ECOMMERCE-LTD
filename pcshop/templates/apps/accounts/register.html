@@ -6,36 +6,61 @@
 
 {% include 'apps/store/_includes/banner.html' %}
 
+<style>
+    @media (min-width: 769px) and (max-width: 992px) {
+.table{
+    font-size: 45px;
+}
+
+.mb-2{
+ font-size: 65px;
+}
+
+.text-size{
+ font-size: 45px;
+}
+
+.text-sizes{
+ font-size: 38px;
+ display
+}
+
+.text-siz{
+font-size: 25px;
+}
+}
+</style>
+
 <div class="page-section mt-5">
     <div class="container ">
-        <h1 class="text-center wow fadeInUp"> Sign In </h1>
+        <h1 class="text-center mb-2 wow fadeInUp"> Sign In </h1>
 
         <form class="contact-form mt-3" method="POST">
             {% csrf_token %}
             <div class="row mb-3">
-                <div class="col-6 mx-auto">
-                    <h5 style="color: red;">{{ register_form.non_field_errors }}</h5>
+                <div class="col-lg-12 col-md-12 col-sm-12 mx-auto">
+                    <h5 style="color: red;" class="text-size">{{ register_form.non_field_errors }}</h5>
 
-                    <label for="fullname">Fullname</label>
-                    <h6 style="color: red;">{{ register_form.errors.fullname }}</h6>
+                    <label for="fullname" class="text-size ">Fullname</label>
+                    <h6 style="color: red;" class="text-size">{{ register_form.errors.fullname }}</h6>
                     {{ register_form.fullname }}
 
-                    <label for="emailAddress">Email</label>
-                    <h6 style="color: red;">{{ register_form.errors.email }}</h6>
+                    <label for="emailAddress" class="text-size ">Email</label>
+                    <h6 style="color: red;" class="text-size">{{ register_form.errors.email }}</h6>
                     {{ register_form.email }}
 
-                    <label for="password">Password</label>
-                    <h6 style="color: red;">{{ register_form.errors.password }}</h6>
+                    <label for="password" class="text-size ">Password</label>
+                    <h6 style="color: red;" class="text-size">{{ register_form.errors.password }}</h6>
                     {{ register_form.password }}
 
-                    <label for="password1">Confirm Password</label>
-                    <h6 style="color: red;">{{ register_form.errors.password1 }}</h6>
+                    <label for="password1" class="text-size ">Confirm Password</label>
+                    <h6 style="color: red;" class="text-size">{{ register_form.errors.password1 }}</h6>
                     {{ register_form.password1 }}
-                    <input type="checkbox" class="mt-3" onclick="myFunction()"> Show Password
+                    <input type="checkbox" class="mt-3 mt-sm-5 mb-sm-5" onclick="myFunction()">  <span class="text-siz ">Show Password</span>
 
-                    <button class="btn btn-outline-dark form-control  wow zoomIn mb-3" type="submit">Submit</button>
+                    <button class="btn btn-outline-dark text-size form-control  wow zoomIn mb-3 " type="submit">Submit</button>
                     <br>
-                    Do you Have an account ? Please <a href="{% url 'accounts:login' %}"> Login </a>
+                    <span class="text-sizes ">Do you Have an account ? Please <a href="{% url 'accounts:login' %}"> Login </a></span>
 
                 </div>
             </div>

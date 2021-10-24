@@ -108,7 +108,10 @@
             <div class="col-lg-3 col-md-12 col-sm-12 " style="margin-bottom: 100px; ">
                 <div class="products-single fix">
                     <div class="container hovereffect img-fix">
-                        <img alt="Image" class="img-fluid img-responsive" src="media/{{ product.image }}">
+                        {#<img alt="Image" class="img-fluid img-responsive" src="media/{{ product.image }}">#}
+
+<!--                        TO DELETE JUST PUT FOR PRODUCTION PURPOSE AS WHITENOISE IS NOT RENDERING IMAGE -->
+                        <img alt="Image" class="img-fluid img-responsive mt-sm-5 mb-sm-5" src="{% static 'media/profiles/pc211007s5420Oh222510op-prod.jpg' %}">
 
                         <div class="justify-content-center text-height" style="line-height: 0.5;">
                             <p class=" ml-auto mt-1"><b>{% if product.discount_price %}

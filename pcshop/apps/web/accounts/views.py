@@ -79,6 +79,10 @@ class UserLoginView(View):
 
     def post(self, request, **kwargs):
 
+        data = product_lib.carData(request)
+
+        cartItems = data['cartItems']
+
         form = UserLoginForm(request.POST or None)
 
         if form.is_valid():
@@ -92,7 +96,7 @@ class UserLoginView(View):
 
         messages.warning(request, "You are not login please check your credentials.")
 
-        context ={'login_form': form}
+        context ={'login_form': form, 'cartItems': cartItems}
         return render(self.request, self.template_name, context)
 
 

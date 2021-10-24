@@ -6,36 +6,60 @@
 
 {% include 'apps/store/_includes/banner.html' %}
 
+<style>
+@media (min-width: 769px) and (max-width: 992px) {
+.table{
+    font-size: 45px;
+}
+
+.mb-2{
+ font-size: 65px;
+}
+
+.text-size{
+ font-size: 45px;
+}
+
+.text-sizes{
+ font-size: 38px;
+ display
+}
+
+.text-siz{
+font-size: 25px;
+}
+}
+</style>
 <div class="page-section mt-5 mb-5">
     <div class="container">
-        <h1 class="text-center wow fadeInUp">Get in Touch</h1>
-
+        <h1 class="text-center wow mb-2 mt-sm-5 mb-sm-5">Get in Touch</h1>
+           <hr>
         <form class="contact-form mt-5" method="POST" novalidate autocomplete="off">
             {% csrf_token %}
 
-            <div class="row mb-3">
-                <div class="col-sm-6 py-2 wow fadeInLeft">
-                    <label for="fullName"> Name</label>
-                     <h6 style="color:red;">{{ form.errors.fullname }}</h6>
+            <div class="row mb-3 ">
+                <div class="col-lg-6 col-md-12 col-sm-12  py-2  mb-sm-3" >
+                    <label for="fullName" class="text-size "> Name</label>
+                     <h6 style="color:red;" class="text-size">{{ form.errors.fullname }}</h6>
                     {{ form.fullname }}
                 </div>
-                <div class="col-sm-6 py-2 wow fadeInRight">
-                    <label for="emailAddress">Email</label>
-                     <h6 style="color:red;">{{ form.errors.email1 }}</h6>
+                <div class="col-lg-6 col-md-12 col-sm-12  py-2  mb-sm-3">
+                    <label for="emailAddress" class="text-size ">Email</label>
+                     <h6 style="color:red;" class="text-size">{{ form.errors.email1 }}</h6>
                     {{ form.email1}}
                 </div>
-                <div class="col-12 py-2 wow fadeInUp">
-                    <label for="subject">Subject</label>
-                     <h6 style="color:red;">{{ form.errors.subject }}</h6>
+                <div class="col-lg-6 col-md-12 col-sm-12  py-2  mb-sm-3">
+                    <label for="subject" class="text-size ">Subject</label>
+                     <h6 style="color:red;" class="text-size">{{ form.errors.subject }}</h6>
                     {{ form.subject }}
                 </div>
-                <div class="col-12 py-2 wow fadeInUp">
-                    <label for="message">Message</label>
-                     <h6 style="color:red;">{{ form.errors.message }}</h6>
+                <div class="col-12 col-md-12 col-sm-12 py-2 mb-sm-3 wow fadeInUp">
+                    <label for="message" class="text-size ">Message</label>
+                     <h6 style="color:red;" class="text-size">{{ form.errors.message }}</h6>
                     {{ form.message }}
                 </div>
             </div>
-            <button class="btn btn-outline-dark wow zoomIn" type="submit">Send Message</button>
+            <button class="btn btn-outline-dark wow text-size zoomIn" type="submit">Send Message</button>
         </form>
     </div>
 </div>
