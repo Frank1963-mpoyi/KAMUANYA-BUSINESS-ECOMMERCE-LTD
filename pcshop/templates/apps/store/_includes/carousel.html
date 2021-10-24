@@ -1,6 +1,7 @@
 {% load static %}
 
 <style>
+/*
     .carousel-inner .carousel-item{
         height: 70vh;
         position: relative
@@ -16,7 +17,7 @@
         top: 50%;                         /* 3 */
         transform: translate(0, -50%)
     }
-
+*/
 
     .carousel-item img {
         width: 100%;
@@ -39,28 +40,34 @@
     <div class="carousel-inner">
         <div class="carousel-item active">
             <img alt="First slide" class="d-block w-100 bg-gradient-dark" src="{% static 'media/photo/kam6.jpg' %}">
+             {% comment %}
             <div class="carousel-caption d-none d-md-block">
                 <h1 style="">WELCOME TO </h1>
                 <h1 style="">PARIS COLLECTION </h1>
                 <h1 style="">L'HABILLEMENT CE NOUS </h1>
             </div>
+             {% endcomment %}
 
         </div>
         <div class="carousel-item">
             <img alt="Second slide" class="d-block w-100 bg-gradient-dark" src="{% static 'media/photo/kam7.jpg' %}">
+            {% comment %}
             <div class="carousel-caption d-none d-md-block">
                 <h1 style="" >WELCOME TO </h1>
                 <h1 style="">PARIS COLLECTION </h1>
                 <h1 style="">L'HABILLEMENT CE NOUS </h1>
             </div>
+             {% endcomment %}
         </div>
         <div class="carousel-item">
             <img alt="Third slide" class="d-block w-100 bg-gradient-dark" src="{% static 'media/photo/kam8.jpg' %}">
+             {% comment %}
             <div class="carousel-caption d-none d-md-block">
                 <h1 style="">WELCOME TO </h1>
                 <h1 style="">PARIS COLLECTION </h1>
                 <h1 style="">L'HABILLEMENT CE NOUS </h1>
             </div>
+             {% endcomment %}
         </div>
 
     </div>
