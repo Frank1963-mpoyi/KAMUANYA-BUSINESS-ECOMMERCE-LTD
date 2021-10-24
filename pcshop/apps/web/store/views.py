@@ -91,6 +91,8 @@ class UpdateItemView(View):
             orderItem.quantity -= 1
         elif action == 'delete':
             orderItem.quantity.delete()
+            messages.success(request, "The item successfully deleted from the cart !")
+
 
         orderItem.save()
 
@@ -195,7 +197,7 @@ class ContactView(View):
             email = ContactNotificationEmail(contactform)
             email.run()
 
-            message = "Your Appointment is received successfully we send you a confirmation email"
+            message = "Your Contact Form is received successfully we send you a confirmation email"
             messages.success(request, message)
             return redirect(self.request.META['HTTP_REFERER'])
 
