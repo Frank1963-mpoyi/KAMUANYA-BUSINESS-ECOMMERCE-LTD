@@ -33,6 +33,7 @@
    font-size: 35px;
     display: inline;
     font-weight: 500;
+     line-height: 1.2;
 
   }
 
@@ -48,13 +49,17 @@
 
   .navbar-toggler-icon{
    font-size: 40px;
+    border-style: solid;
+
+
 
   }
+
 
   .sm-hidden{
     display: none;
   }
-}
+
 
 </style>
 
@@ -84,11 +89,14 @@
 </div>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-darker sticky-top ">
-    <a class=" brand-color" href="{#% static 'media/photo/brand.jpg' %#}">{{ brand_name }}</a>
+    <a class=" brand-color "  href="{% url 'store:home' %}">{{ brand_name }}</a>
+    <a class=" brand-color  d-lg-none"  href="{% url 'store:cart' %}"> <i class="fa fa-shopping-bag"></i> {{ cartItems }}</a>
+    <a class=" brand-color  d-lg-none" href="{% url 'accounts:login' %}"> <i class="fa fa-user"></i> Login</a>
     <button aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
             data-target="#navbarNav" data-toggle="collapse" type="button">
-        <span class="navbar-toggler-icon"></span>
+        <span class="navbar-toggler-icon  "></span>
     </button>
+
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
 
@@ -103,18 +111,18 @@
             </li>
             {% if request.user.is_authenticated %}
             <li class="nav-item {% if page_name == 'logout' %} active {% endif %}">
-                <a class="nav-link" href="{% url 'accounts:logout' %}"><i class="fas fa-sign-out-alt"></i> logout</a>
+                <a class="nav-link sm-hidden" href="{% url 'accounts:logout' %}"><i class="fas fa-sign-out-alt"></i> logout</a>
             </li>
             {% else %}
                <li class="nav-item {% if page_name == 'signin' %} active {% endif %}" >
-                <a class="nav-link" href="{% url 'accounts:register' %}"><i class="fas fa-sign-in-alt"></i> Sign in</a>
+                <a class="nav-link sm-hidden" href="{% url 'accounts:register' %}"><i class="fas fa-sign-in-alt"></i> Sign in</a>
             </li>
             <li class="nav-item {% if page_name == 'login' %} active {% endif %}">
-                <a class="nav-link" href="{% url 'accounts:login' %}"><i class="fa fa-user"></i> Login </a>
+                <a class="nav-link sm-hidden" href="{% url 'accounts:login' %}"><i class="fa fa-user"></i> Login </a>
             </li>
             {% endif %}
              <li class="nav-item active">
-                <a class="nav-link " href="{% url 'store:cart' %}" style=""> <i class="fa fa-shopping-bag"></i> {{ cartItems }}</a>
+                <a class="nav-link sm-hidden" href="{% url 'store:cart' %}" style=""> <i class="fa fa-shopping-bag"></i> {{ cartItems }}</a>
              </li>
         </ul>
     </div>
