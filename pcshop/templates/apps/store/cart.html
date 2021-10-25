@@ -11,6 +11,23 @@
     .quantity-box{
         cursor: pointer;
     }
+
+    @media (min-width: 769px) and (max-width: 992px) {
+
+     .img-fluid {
+            width: 150px;
+            height: 100px;
+        }
+
+    .mb-2{
+     font-size: 65px;
+    }
+
+    .text-size{
+     font-size: 45px;
+    }
+
+}
 </style>
 
 {% include 'apps/store/_includes/banner.html' %}
@@ -18,14 +35,15 @@
 
 <div class="container mt-5" style="margin-bottom: 250px;">
     <h2 class="text-center mb-2"> Order summary</h2>
+    <hr>
     <div class="row">
         <div class="col-lg-12">
-            <div class="table-main table-responsive  ">
+            <div class="table-main table-responsive">
                 <table class="table">
                     <thead>
                     <tr>
                         <th>Images</th>
-                        <th>Product Name</th>
+                        <th>Product</th>
                         <th>Price</th>
                         <th>Quantity</th>
                         <th>Total</th>
@@ -38,19 +56,19 @@
                     <tr>
                         <td><img alt="" class="img-fluid" style="" src="{{ item.product.image_url }}"/></td>
 
-                        <td><p>{{ item.product.title }}</p></td>
+                        <td class="text-size"><p>{{ item.product.title }}</p></td>
 
-                        <td><p>R {{ item.product.price }} </p></td>
+                        <td class="text-size"><p>R{{ item.product.price }} </p></td>
 
-                        <td><i class="fa fa-minus chg-quantity  update-cart cursor-pointer" data-action="remove"
-                               data-product="{{ item.product.id }}" aria-hidden="true"></i>&nbsp; &nbsp;{{ item.quantity }}&nbsp; &nbsp; <i class="fa fa-plus chg-quantity update-cart pe-auto" data-action="add"
+                        <td class="text-size"><i class="fa fa-minus chg-quantity  update-cart cursor-pointer" data-action="remove"
+                               data-product="{{ item.product.id }}" aria-hidden="true"></i>&nbsp;{{ item.quantity }}&nbsp;<i class="fa fa-plus chg-quantity update-cart pe-auto" data-action="add"
                                                data-product="{{ item.product.id }}" aria-hidden="true"></i>
                         </td>
 
-                        <td class="total-pr"><p>R {{ item.get_total }}</p></td>
+                        <td class="text-size"><p>R{{ item.get_total }}</p></td>
 
                         <!--                            Need to work on it to remove the -->
-                        <td class="remove-pr quantity-box " style="color:red;">
+                        <td class="text-size text-center" style="color:red;">
                             <i class="fas fa-times chg-quantity update-cart" data-action="delete"
                                data-product="{{ item.product.id }}"></i>
                         </td>
@@ -72,21 +90,21 @@
 
         <div class="col-lg-4 col-sm-12">
             <div class="d-flex">
-                <h5>Items : </h5>
-                <div class="ml-auto font-weight-bold">{{ order.get_cart_items }}</div>
+                <h5 class="text-size">Items : </h5>
+                <div class="ml-auto font-weight-bold text-size ">{{ order.get_cart_items }}</div>
             </div>
             <hr>
 
             <div class="d-flex">
-                <h5>Grand Total</h5>
-                <div class="ml-auto h5"> $
+                <h5 class="text-size">Grand Total</h5>
+                <div class="ml-auto h5 text-size"> R
                     <b>{{ order.get_cart_total }}</b></div>
             </div>
             <hr>
 
             <div class="d-flex">
-                <a class="btn btn-outline-dark" href="{% url 'store:home' %}">&#x2190; Back to Product</a>
-                <a class="ml-auto btn  btn-outline-dark hvr-hover" href="{% url 'store:checkout' %}">Checkout</a>
+                <a class="btn btn-dark text-size" href="{% url 'store:home' %}">&#x2190; Back to Product</a>
+                <a class="ml-auto btn  btn-dark hvr-hover text-size" href="{% url 'store:checkout' %}">Checkout</a>
             </div>
 
         </div>

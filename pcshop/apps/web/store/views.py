@@ -39,7 +39,7 @@ class HomeView(View):
         #products    = products.search(query=i['query'])
 
         #pagination
-        paginator   = Paginator(products, 7)
+        paginator   = Paginator(products, 8)
         page_number = request.GET.get('page')
         page_obj    = paginator.get_page(page_number)
 

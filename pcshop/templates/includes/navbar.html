@@ -5,71 +5,68 @@
 
     .bg-darker{
         background:#70AB8F;
+    }
 
+    .nav-item a {
+        font-size: 20px;
+        text-align: center;
     }
 
     .bg-darker a{
-     text-decoration: none;
+        text-decoration: none;
     }
 
     .bg-darker a:hover{
-     color:#383127;
+        color:#383127;
     }
 
     .brand-color  {
-         color: white;
-         font-size: 25px;
-         font-weight: 200;
-
-
+        color: white;
+        font-size: 25px;
+        font-weight: 200;
     }
 
-@media (min-width: 769px) and (max-width: 992px) {
-  .navbar-expand-lg .brand-color{
-     font-size: 55px;
-  }
+    @media (min-width: 769px) and (max-width: 992px) {
+            .navbar-expand-lg .brand-color{
+            font-size: 55px;
+        }
 
-  .text-top{
-   font-size: 35px;
-    /*display: inline;*/
-    font-weight: 500;
-     line-height: 1.2;
+        .text-top{
+            font-size: 35px;
+            /*display: inline;*/
+            font-weight: 500;
+            line-height: 1.2;
+        }
 
-  }
+        .form-control{
+            font-size: 35px;
+            font-weight: 500;
+        }
 
-  .form-control{
-   font-size: 35px;
-     font-weight: 500;
-  }
+        .nav-item a {
+            font-size: 40px;
+            text-align: center;
+        }
 
-  .nav-item a {
-    font-size: 40px;
-    text-align: center;
-  }
+        .navbar-toggler-icon{
+            font-size: 40px;
+            border-style: solid;
+        }
 
-  .navbar-toggler-icon{
-   font-size: 40px;
-    border-style: solid;
+        .sm-hidden{
+            display: none;
+        }
 
+        .padding_sm{
+            padding-top: 25px;
+            padding-bottom: 25px;
+        }
 
-
-  }
-
-
-  .sm-hidden{
-    display: none;
-  }
-
-  .padding_sm{
-  padding-top: 25px;
-  padding-bottom: 25px;
-  }
-
-
+        }
     }
-}
 
 </style>
+
 
 <div class="container-fluid p-1 text-top">
     <div class="form-inline ">
@@ -77,15 +74,16 @@
             <div class="input-group-prepend">
                 <span class="input-group-text" id="icon-addon1"><span class="mai-search"></span></span>
             </div>
-            <input class="form-control  col-sm-8 mr-sm-2 font-weight-normal" name="q" placeholder="Enter keyword.." type="search">
+            <input class="form-control  col-sm-8 mr-sm-2 font-weight-normal" name="q" placeholder="Enter keyword.."
+                   type="search">
         </form>
 
         <div class="ml-auto  font-weight-normal">
 
             {% if request.user.is_authenticated %}
-            <span>Hello, {{ user.username|default:'Tshibuyi' }} ! Thanks for logging in. </span>
+                <span>Hello, {{ user.username|default:'Tshibuyi' }} ! Thanks for logging in. </span>
             {% else %}
-            <span>Hello, {{ user.username|default:'Guest' }} ! Please log in. </span>
+                <span>Hello, {{ user.username|default:'Guest' }} ! Please log in. </span>
             {% endif %}
         </div>
 
@@ -97,12 +95,16 @@
 </div>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-darker sticky-top padding_sm">
-    <a class=" brand-color font-weight-normal"  href="{% url 'store:home' %}">{{ brand_name }}</a>
-    <a class=" brand-color  d-lg-none font-weight-light"  href="{% url 'store:cart' %}"> <i class="fa fa-shopping-bag"></i> <span class="text-danger" style="font-weight:600;">{{ cartItems }}</span></a>
+    <a class=" brand-color font-weight-normal" href="{% url 'store:home' %}">{{ brand_name }}</a>
+    <a class=" brand-color  d-lg-none font-weight-light ml-auto" href="{% url 'store:cart' %}">
+        <i class="fa fa-shopping-bag"></i> <span class="text-danger" style="font-weight:600;">{{ cartItems }} &nbsp; </span>
+    </a>
     {% if request.user.is_authenticated %}
-     <a class=" brand-color  d-lg-none font-weight-light" href="{% url 'accounts:logout' %}"><i class="fas fa-sign-out-alt"></i> logout</a>
+    <a class=" brand-color  d-lg-none font-weight-light" href="{% url 'accounts:logout' %}"><i
+            class="fas fa-sign-out-alt"></i> logout &nbsp;</a>
     {% else %}
-    <a class=" brand-color  d-lg-none font-weight-light" href="{% url 'accounts:login' %}"> <i class="fa fa-user"></i> Login</a>
+    <a class=" brand-color  d-lg-none font-weight-light" href="{% url 'accounts:login' %}"> <i class="fa fa-user"></i>
+        Login &nbsp;</a>
     {% endif %}
     <button aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
             data-target="#navbarNav" data-toggle="collapse" type="button">
@@ -113,29 +115,31 @@
         <ul class="navbar-nav ml-auto">
 
             <li class="nav-item {% if page_name == 'home' %} active {% endif %}">
-                <a class="nav-link" href="{% url 'store:home' %}">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{% url 'store:home' %}">HOME <span class="sr-only">(current)</span></a>
             </li>
-             <li class="nav-item {% if page_name == 'about' %} active {% endif %}">
-                <a class="nav-link" href="{% url 'store:about' %}">About </a>
+            <li class="nav-item {% if page_name == 'about' %} active {% endif %}">
+                <a class="nav-link" href="{% url 'store:about' %}">ABOUT </a>
             </li>
             <li class="nav-item {% if page_name == 'contact' %} active {% endif %}">
-                <a class="nav-link" href="{% url 'store:contact' %}">Contact</a>
+                <a class="nav-link" href="{% url 'store:contact' %}">CONTACT</a>
+            </li>
+            <li class="nav-item {% if page_name == 'contact' %} active {% endif %}">
+                <a class="nav-link" href="{#% url 'store:contact' %#}">SALE</a>
             </li>
             {% if request.user.is_authenticated %}
             <li class="nav-item {% if page_name == 'logout' %} active {% endif %}">
-                <a class="nav-link sm-hidden" href="{% url 'accounts:logout' %}"><i class="fas fa-sign-out-alt"></i> logout</a>
+                <a class="nav-link sm-hidden" href="{% url 'accounts:logout' %}"><i class="fas fa-sign-out-alt"></i>
+                    logout</a>
             </li>
             {% else %}
-               <li class="nav-item {% if page_name == 'signin' %} active {% endif %}" >
-                <a class="nav-link sm-hidden" href="{% url 'accounts:register' %}"><i class="fas fa-sign-in-alt"></i> Sign in</a>
-            </li>
             <li class="nav-item {% if page_name == 'login' %} active {% endif %}">
                 <a class="nav-link sm-hidden" href="{% url 'accounts:login' %}"><i class="fa fa-user"></i> Login </a>
             </li>
             {% endif %}
-             <li class="nav-item active">
-                 <a class="nav-link sm-hidden" href="{% url 'store:cart' %}" style=""> <i class="fa fa-shopping-bag"></i> <span class="text-danger" style="color:red; font-weight:600; font-size:20px;">{{ cartItems }}</span></a>
-             </li>
+            <li class="nav-item active">
+                <a class="nav-link sm-hidden" href="{% url 'store:cart' %}" style=""> <i class="fa fa-shopping-bag"></i>
+                    <span class="text-danger" style="color:red; font-weight:600; font-size:20px;">{{ cartItems }}</span></a>
+            </li>
         </ul>
     </div>
 </nav>
