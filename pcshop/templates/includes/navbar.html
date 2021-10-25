@@ -98,7 +98,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-darker sticky-top padding_sm">
     <a class=" brand-color font-weight-normal"  href="{% url 'store:home' %}">{{ brand_name }}</a>
-    <a class=" brand-color  d-lg-none font-weight-light"  href="{% url 'store:cart' %}"> <i class="fa fa-shopping-bag"></i> {{ cartItems }}</a>
+    <a class=" brand-color  d-lg-none font-weight-light"  href="{% url 'store:cart' %}"> <i class="fa fa-shopping-bag"></i> <span class="text-danger" style="font-weight:600;">{{ cartItems }}</span></a>
     {% if request.user.is_authenticated %}
      <a class=" brand-color  d-lg-none font-weight-light" href="{% url 'accounts:logout' %}"><i class="fas fa-sign-out-alt"></i> logout</a>
     {% else %}
@@ -134,7 +134,7 @@
             </li>
             {% endif %}
              <li class="nav-item active">
-                <a class="nav-link sm-hidden" href="{% url 'store:cart' %}" style=""> <i class="fa fa-shopping-bag"></i> {{ cartItems }}</a>
+                 <a class="nav-link sm-hidden" href="{% url 'store:cart' %}" style=""> <i class="fa fa-shopping-bag"></i> <span class="text-danger" style="color:red; font-weight:600; font-size:20px;">{{ cartItems }}</span></a>
              </li>
         </ul>
     </div>

@@ -7,7 +7,8 @@
 {% include 'apps/store/_includes/banner.html' %}
 
 <style>
-    @media (min-width: 769px) and (max-width: 992px) {
+
+@media (min-width: 769px) and (max-width: 992px) {
 .table{
     font-size: 45px;
 }
@@ -29,42 +30,48 @@
 font-size: 25px;
 }
 }
+
 </style>
 
 <div class="page-section mt-5">
-    <div class="container ">
-        <h1 class="text-center mb-2 wow fadeInUp"> Sign In </h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <h1 class="text-center wow fadeInUp mb-2">Sign In</h1>
 
-        <form class="contact-form mt-3" method="POST">
-            {% csrf_token %}
-            <div class="row mb-3">
-                <div class="col-lg-12 col-md-12 col-sm-12 mx-auto">
-                    <h5 style="color: red;" class="text-size">{{ register_form.non_field_errors }}</h5>
+                <form class="contact-form mt-3" method="POST">
+                    {% csrf_token %}
+                    <div class="row mb-3">
+                        <div class="col-lg-6 col-md-12 col-sm-12 mx-auto mb-sm-5">
 
-                    <label for="fullname" class="text-size ">Fullname</label>
-                    <h6 style="color: red;" class="text-size">{{ register_form.errors.fullname }}</h6>
-                    {{ register_form.fullname }}
+                            <label class="text-size " for="fullname">Fullname</label>
+                            <h6 class="text-size" style="color: red;">{{ register_form.errors.fullname }}</h6>
+                            {{ register_form.fullname }}
 
-                    <label for="emailAddress" class="text-size ">Email</label>
-                    <h6 style="color: red;" class="text-size">{{ register_form.errors.email }}</h6>
-                    {{ register_form.email }}
+                            <label class="text-size " for="emailAddress">Email</label>
+                            <h6 class="text-size" style="color: red;">{{ register_form.errors.email }}</h6>
+                            {{ register_form.email }}
 
-                    <label for="password" class="text-size ">Password</label>
-                    <h6 style="color: red;" class="text-size">{{ register_form.errors.password }}</h6>
-                    {{ register_form.password }}
+                            <label class="text-size" for="password">Password</label>
+                            <h6 class="text-size" style="color: red;">{{ register_form.errors.password }}</h6>
+                            {{ register_form.password }}
 
-                    <label for="password1" class="text-size ">Confirm Password</label>
-                    <h6 style="color: red;" class="text-size">{{ register_form.errors.password1 }}</h6>
-                    {{ register_form.password1 }}
-                    <input type="checkbox" class="mt-3 mt-sm-5 mb-sm-5" onclick="myFunction()">  <span class="text-siz ">Show Password</span>
+                            <label class="text-size" for="password1">Confirm Password</label>
+                            <h6 class="text-size" style="color: red;">{{ register_form.errors.password1 }}</h6>
+                            {{ register_form.password1 }}
 
-                    <button class="btn btn-outline-dark text-size form-control  wow zoomIn mb-3 " type="submit">Submit</button>
-                    <br>
-                    <span class="text-sizes ">Do you Have an account ? Please <a href="{% url 'accounts:login' %}"> Login </a></span>
+                            <input class="mb-5 mt-5 text-siz " onclick="myFunction()" type="checkbox"> <span class="text-siz ">Show Password</span> <br>
 
-                </div>
+                            <button class="btn btn-outline-dark form-control text-size wow zoomIn mb-3" type="submit">Submit</button>
+                            <br>
+                            <span class="text-sizes">Don't Have an account ? Please <a href="{% url 'accounts:login' %}">login</a><br></span>
+                        </div>
+                    </div>
+                </form>
             </div>
-        </form>
+
+        </div>
+
     </div>
 </div>
 

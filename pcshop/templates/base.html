@@ -15,23 +15,24 @@
 
         {% include 'includes/navbar.html'  with  brand_name="PARIS COLLECTION " %}
 
+
         {% include 'includes/message.html'  %}
 
-        {% block content %}
-
-        {% endblock content %}
-
+        {% block content %} {% endblock content %}
 
         <!-- extra body -->
-        {% block extra_body %}
-
-        {% endblock  %}
+        {% block extra_body %} {% endblock  %}
 
 
+        {% if page_name == 'home' %}
+             <!--     Sale   -->
+         {% include 'includes/sale-live.html'  %}
 
+         {% include 'includes/image-slider.html'  %}
 
-        {% include 'includes/footer.html'  %}
+        {% endif %}
 
+         {% include 'includes/footer.html'  %}
 
         {% include 'includes/scripts.html' %}
 

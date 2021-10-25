@@ -11,32 +11,15 @@
     .quantity-box{
         cursor: pointer;
     }
-
-
-@media (min-width: 769px) and (max-width: 992px) {
-.table{
-    font-size: 45px;
-}
-
-.mb-2{
- font-size: 65px;
-}
-
-.text-size{
- font-size: 45px;
-}
-}
-
 </style>
 
 {% include 'apps/store/_includes/banner.html' %}
 <!-- Start Cart  -->
 
 <div class="container mt-5" style="margin-bottom: 250px;">
-    <h2 class="text-center mb-2 mb-sm-5"> Order summary</h2>
-    <hr>
+    <h2 class="text-center mb-2"> Order summary</h2>
     <div class="row">
-        <div class="col-lg-12 ">
+        <div class="col-lg-12">
             <div class="table-main table-responsive  ">
                 <table class="table">
                     <thead>
@@ -52,7 +35,7 @@
 
                     <tbody>
                     {% for item in items %}
-                    <tr class="text-size">
+                    <tr>
                         <td><img alt="" class="img-fluid" style="" src="{{ item.product.image_url }}"/></td>
 
                         <td><p>{{ item.product.title }}</p></td>
@@ -81,29 +64,29 @@
 
     <hr>
 
-    <div class="row my-1 text-size">
+    <div class="row my-1">
 
         <div class="col-lg-8 col-sm-12">
 
         </div>
 
-        <div class="col-lg-4 col-sm-12 text-size">
+        <div class="col-lg-4 col-sm-12">
             <div class="d-flex">
-                <h5 class="text-size">Items : </h5>
-                <div class="ml-auto font-weight-bold text-size">{{ order.get_cart_items }}</div>
+                <h5>Items : </h5>
+                <div class="ml-auto font-weight-bold">{{ order.get_cart_items }}</div>
             </div>
             <hr>
 
             <div class="d-flex">
-                <h5 class="text-size">Grand Total</h5>
-                <div class="ml-auto h5 text-size"> R
+                <h5>Grand Total</h5>
+                <div class="ml-auto h5"> $
                     <b>{{ order.get_cart_total }}</b></div>
             </div>
             <hr>
 
             <div class="d-flex">
-                <a class="btn btn-outline-dark text-size" href="{% url 'store:home' %}">&#x2190; Back to Product</a>
-                <a class="ml-auto btn  btn-outline-dark hvr-hover text-size" href="{% url 'store:checkout' %}">Checkout</a>
+                <a class="btn btn-outline-dark" href="{% url 'store:home' %}">&#x2190; Back to Product</a>
+                <a class="ml-auto btn  btn-outline-dark hvr-hover" href="{% url 'store:checkout' %}">Checkout</a>
             </div>
 
         </div>
