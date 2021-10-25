@@ -90,7 +90,7 @@ class UpdateItemView(View):
         elif action == 'remove':
             orderItem.quantity -= 1
         elif action == 'delete':
-            orderItem.quantity.delete()
+            orderItem.delete()
             messages.success(request, "The item successfully deleted from the cart !")
 
 
@@ -245,3 +245,4 @@ def search_view(request):
         #return render(request, template_name, context)
 
     return render(request, template_name, context)
+
