@@ -16,7 +16,7 @@ if settings.DEBUG:
 
     urlpatterns = [
 
-        path('admin/',                              admin.site.urls),
+        path('mpoyi-admin/',                              admin.site.urls),
         path('__debug__/',                          include(debug_toolbar.urls)),
 
     ] + urlpatterns
