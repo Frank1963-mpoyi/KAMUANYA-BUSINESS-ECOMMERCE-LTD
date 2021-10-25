@@ -5,7 +5,7 @@ from .base                                                  import *
 
 DEBUG               = config('DEBUG')
 
-ALLOWED_HOSTS       = ['127.0.0.1', 'paris-collection.herokuapp.com']
+ALLOWED_HOSTS       = ['127.0.0.1', 'seraphin-kapembu.herokuapp.com']
 
 MIDDLEWARE += [
     'whitenoise.middleware.WhiteNoiseMiddleware',
