@@ -47,7 +47,6 @@
                         <th>Price</th>
                         <th>Quantity</th>
                         <th>Total</th>
-                        <th>Remove</th>
                     </tr>
                     </thead>
 
@@ -66,12 +65,6 @@
                         </td>
 
                         <td class="text-size"><p>R{{ item.get_total }}</p></td>
-
-                        <!--                            Need to work on it to remove the -->
-                        <td class="text-size text-center" style="color:red;">
-                            <i class="fas fa-times chg-quantity update-cart" data-action="delete"
-                               data-product="{{ item.product.id }}"></i>
-                        </td>
                     </tr>
                     {% endfor %}
                     </tbody>
