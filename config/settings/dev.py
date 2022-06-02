@@ -1,29 +1,22 @@
-from .base                                                      import *
+from .base import *
 
 
-DEBUG  = True
+DEBUG = True
 
-ALLOWED_HOSTS = [
-    'localhost',
-    '127.0.0.1',
-]
+ALLOWED_HOSTS = ['localhost', '127.0.0.1',]
 
-INSTALLED_APPS += [
-    'debug_toolbar',
-]
+INSTALLED_APPS += ['debug_toolbar',]
 
-MIDDLEWARE += [
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
-]
+MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware',]
 
 DATABASES = {
     'default': {
-        'ENGINE'    : 'django.db.backends.postgresql',
-        'NAME'      : config("HP_DB_NAME"),
-        'USER'      : config("HP_DB_USER"),
-        'PASSWORD'  : config("HP_DB_PASSWORD"),
-        'HOST'      : config("HP_DB_HOST"),
-        'PORT'      : config("HP_DB_PORT"),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config("HP_DB_NAME"),
+        'USER': config("HP_DB_USER"),
+        'PASSWORD': config("HP_DB_PASSWORD"),
+        'HOST': config("HP_DB_HOST"),
+        'PORT': config("HP_DB_PORT"),
     }
 }
 
@@ -48,14 +41,14 @@ def show_toolbar(request):
     return True
 
 DEBUG_TOOLBAR_CONFIG = {
-    'INTERCEPT_REDIRECTS'   : False,
-    'SHOW_TOOLBAR_CALLBACK' : show_toolbar,
+    'INTERCEPT_REDIRECTS': False,
+    'SHOW_TOOLBAR_CALLBACK': show_toolbar,
 }
 
 print("\n")
-print("DEBUG        = ", DEBUG)
-print("DATABASES    = ", DATABASES['default']['NAME'])
-print("HOST         = ", DATABASES['default']['HOST'])
-print("TEMPLATES    = ", TEMPLATES[0]['DIRS'])
-print("STATIC_ROOT  = ", STATIC_ROOT)
-print("MEDIA_ROOT   = ", MEDIA_ROOT)
+print("DEBUG = ", DEBUG)
+print("DATABASES = ", DATABASES['default']['NAME'])
+print("HOST = ", DATABASES['default']['HOST'])
+print("TEMPLATES = ", TEMPLATES[0]['DIRS'])
+print("STATIC_ROOT = ", STATIC_ROOT)
+print("MEDIA_ROOT = ", MEDIA_ROOT)

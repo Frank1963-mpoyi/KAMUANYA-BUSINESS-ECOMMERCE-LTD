@@ -1,18 +1,18 @@
-from django.db.models                                               import Q
-from pcshop.apps.web.accounts.models                              import CustomUser
+from django.db.models import Q
+from pcshop.apps.web.accounts.models import CustomUser
 
 
 def check_allowed_staff(self):
 
     staff = {
-        'allowed'   : False,
-        'assignee'  : False,
-        'assigner'  : False,
+        'allowed': False,
+        'assignee': False,
+        'assigner': False,
 
-        'employee'  : False,
+        'employee': False,
         'supervisor': False,
         'management': False,
-        'chief'     : False,
+        'chief': False,
     }
 
     user = self.request.user
@@ -23,22 +23,22 @@ def check_allowed_staff(self):
             staff['assignee'] = 'Y'
 
             if user.user_level >= 2:
-                staff['employee']    = 'Y'
-                staff['supervisor']  = 'Y'
+                staff['employee'] = 'Y'
+                staff['supervisor'] = 'Y'
 
             if user.user_level >= 3:
-                staff['assigner']    = 'Y'
+                staff['assigner'] = 'Y'
 
-                staff['employee']    = 'Y'
-                staff['supervisor']  = 'Y'
-                staff['management']  = 'Y'
-                staff['chief']       = 'Y'
+                staff['employee'] = 'Y'
+                staff['supervisor'] = 'Y'
+                staff['management'] = 'Y'
+                staff['chief'] = 'Y'
 
         if user.user_type == 2:
             staff['employee'] = 'Y'
 
             if user.user_level >= 2:
-                staff['supervisor']  = 'Y'
+                staff['supervisor'] = 'Y'
 
             if user.user_level >= 4:
                 staff['management'] = 'Y'
@@ -53,14 +53,14 @@ def get_user(username):
 
     user = CustomUser.objects \
         .filter(
-            Q(username  = username) |
-            Q(email     = username) |
-            Q(code      = username) |
+            Q(username = username) |
+            Q(email = username) |
+            Q(code = username) |
             Q(uuid_code = username)
         ) \
         .exclude(
-            Q(bool_deleted  = True) |
-            Q(is_active     = False)
+            Q(bool_deleted = True) |
+            Q(is_active = False)
         ) \
         .values(
             'uuid_code', 'token_key', 'code', 'username', 'phone_number', 'country_code', 'fullname', 'id_number','dob',

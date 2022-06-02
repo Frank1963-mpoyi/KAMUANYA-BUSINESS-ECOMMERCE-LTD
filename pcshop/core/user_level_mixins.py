@@ -1,4 +1,4 @@
-from django.contrib.auth                                    import get_user_model
+from django.contrib.auth import get_user_model
 
 
 User = get_user_model()
@@ -15,15 +15,15 @@ class UserLevelMixin(object):
 
         cus_level = self.request.user.user_level         # CUSTOMER LEVEL OR CLIENT
         ret_level = self.request.user.user_level         # RETAILER LEVEL - SEE LIST BUT CAN'T EDIT
-        emp_type  = self.request.user.user_level         # EMPLOYEE / STORE ATTENDANT / AGENT / REPORT LEVEL
-        mgn_type  = self.request.user.user_level         # MANAGEMENT LEVEL
-        top_type  = self.request.user.user_level         # OWNER / TOP MANAGEMENT LEVEL
+        emp_type = self.request.user.user_level         # EMPLOYEE / STORE ATTENDANT / AGENT / REPORT LEVEL
+        mgn_type = self.request.user.user_level         # MANAGEMENT LEVEL
+        top_type = self.request.user.user_level         # OWNER / TOP MANAGEMENT LEVEL
 
-        user_type_check   = (self.permission_needed[0:3])
+        user_type_check = (self.permission_needed[0:3])
         user_depart_check = (self.permission_needed[4:7])
-        user_level_check  = int(self.permission_needed[8:9])
+        user_level_check = int(self.permission_needed[8:9])
 
-        user_authorised   = 'N'
+        user_authorised = 'N'
 
         allowed_user_type = None
 

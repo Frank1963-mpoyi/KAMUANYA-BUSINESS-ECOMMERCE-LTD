@@ -1,58 +1,41 @@
 import dj_database_url
 
-from .base                                                  import *
+from .base import *
 
 
-DEBUG               = config('DEBUG')
+DEBUG = config('DEBUG')
 
-ALLOWED_HOSTS       = ['127.0.0.1', 'paris-collection.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'paris-collection.herokuapp.com']
 
-MIDDLEWARE += [
-    'whitenoise.middleware.WhiteNoiseMiddleware',
-]
+MIDDLEWARE += ['whitenoise.middleware.WhiteNoiseMiddleware',]
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',},
 ]
 
 # Honor the 'X-Forwarded-Proto' header fro request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-prod_db  =  dj_database_url.config(conn_max_age=500)
+prod_db = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(prod_db)
-
 
 # Static files (CSS, JavaScript, Images)
 BASE_PATH = os.path.join(BASE_DIR)
-
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'pcshop/static')]
-
-STATIC_URL  = '/static/'
-
+STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_PATH, 'pcshop/static/includes')
-
-MEDIA_URL   = '/media/'
-
-MEDIA_ROOT  = os.path.join(BASE_PATH, 'pcshop/static/media')
-
-STATICFILES_STORAGE     = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_PATH, 'pcshop/static/media')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 ENVIRONMENT = 'PRODUCTION'
 
 print("\n")
-print("DEBUG        = ", DEBUG      )
-print("MODE         = ", ENVIRONMENT)
-print("STATIC_ROOT  = ", STATIC_ROOT)
-print("MEDIA_ROOT   = ", MEDIA_ROOT )
+print("DEBUG = ", DEBUG)
+print("MODE = ", ENVIRONMENT)
+print("STATIC_ROOT = ", STATIC_ROOT)
+print("MEDIA_ROOT = ", MEDIA_ROOT )
 print("\n")

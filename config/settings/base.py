@@ -1,7 +1,7 @@
 import os
 
-import      configparser
-from        decouple            import config
+import configparser
+from decouple import config
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -43,7 +43,6 @@ INSTALLED_APPS = [
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
 
 # DRF Authentication
 REST_FRAMEWORK = {
@@ -93,10 +92,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 #Database
 CONFIG_DIR = os.path.join(BASE_DIR, 'config/')
-
 parser = configparser.ConfigParser()
-
-
 parser.read_file(open(os.path.join(CONFIG_DIR, 'app.ini')))
 
 #Done with postgresql
@@ -113,13 +109,13 @@ DATABASES = {
 }
 
 # # gmail
-EMAIL_BACKEND   = config('EMAIL_BACKEND')
-EMAIL_HOST      = config('EMAIL_HOST')
-EMAIL_USE_TLS   = config('EMAIL_USE_TLS')
-EMAIL_PORT      = config('EMAIL_PORT')
-EMAIL_SENDER    = config('EMAIL_SENDER')
+EMAIL_BACKEND = config('EMAIL_BACKEND')
+EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_USE_TLS = config('EMAIL_USE_TLS')
+EMAIL_PORT = config('EMAIL_PORT')
+EMAIL_SENDER = config('EMAIL_SENDER')
 #EMAIL_HOST_USER = config('EMAIL_HOST_USER')# test with registration reset
-EMAIL_PASSWORD  = config('EMAIL_PASSWORD')
+EMAIL_PASSWORD = config('EMAIL_PASSWORD')
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -140,7 +136,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE       = 'Africa/Johannesburg'
+TIME_ZONE = 'Africa/Johannesburg'
 
 USE_I18N = True
 
@@ -150,17 +146,10 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 BASE_PATH = os.path.join(BASE_DIR)
-
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'pcshop/static/store')]
-
-STATIC_URL  = '/static/'
-
+STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_PATH, 'pcshop/static/includes')
-
-MEDIA_URL   = '/media/'
-
-MEDIA_ROOT  = os.path.join(BASE_PATH, 'pcshop/static/media')
-
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_PATH, 'pcshop/static/media')
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
-
 DJANGO_SETTINGS_MODULE = 'config.settings.prod'

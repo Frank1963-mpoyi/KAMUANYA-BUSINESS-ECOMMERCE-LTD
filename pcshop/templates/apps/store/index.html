@@ -26,21 +26,6 @@
          background: #E4DBBF;
     }
 
-
-/*
-.hovereffect img {
-    display: block;
-    position: relative;
-	-webkit-transition: -webkit-transform 0.35s;
-	transition: transform 0.35s;
-}
-
-.hovereffect:hover img {
--webkit-transform: translate3d(0,-10%,0);
-	transform: translate3d(0,-10%,0);
-}
-*/
-
 @media (max-width: 768px) {
   .btn-responsive {
     padding:2px 4px;
@@ -81,24 +66,11 @@
         <div class="row">
             <div class="col-lg-12  special-grid">
                 <div class="title-all text-center " style="margin-bottom: 5px; margin-top: 30px;">
-                    <h1 class="product-title"> Featured Products </h1>
+                    <h1 class="product-title">Products </h1>
                     <p></p>
                 </div>
             </div>
         </div>
-
-         <div class="row mb-5 mt-3">
-            <div class="col-lg-12  col-md-12">
-                <div class="special-menu text-center">
-                    <div class="button-group filter-button-group">
-                        <button class="active btn-outline-secondarys card-link btn " id="all-products" data-filter="*" > All</button>
-                        <button class="active btn-outline-secondarys card-link btn" id="featured-product" data-filter=".top-featured"> Top featured</button>
-                        <button class="active btn-outline-secondarys card-link btn" id="best-product" data-filter=".best-seller"> Best seller</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
     </div>
 
     <div class="container">
@@ -108,11 +80,7 @@
             <div class="col-lg-3 col-md-12 col-sm-12 " style="margin-bottom: 100px; ">
                 <div class="products-single fix">
                     <div class="container hovereffect img-fix">
-                        {#<img alt="Image" class="img-fluid img-responsive" src="media/{{ product.image }}">#}
-
-<!--                        TO DELETE JUST PUT FOR PRODUCTION PURPOSE AS WHITENOISE IS NOT RENDERING IMAGE -->
-                        <img alt="Image" class="img-fluid img-responsive mt-sm-5 mb-sm-5" src="{% static 'media/profiles/pc211007s5420Oh222510op-prod.jpg' %}">
-
+                        <img alt="Image" class="img-fluid img-responsive" src="media/{{ product.image }}">
                         <div class="justify-content-center text-height" style="line-height: 0.5;">
                             <p class=" ml-auto mt-1"><b>{% if product.discount_price %}
                             <del>R {{ product.price }}</del>
@@ -131,102 +99,8 @@
     </div>
 
 </div>
-
 <!-- End Products  -->
 
 {% include  'apps/store/_includes/pagination.html'  %}
 
-{#% comment %#}
-<script>
-
-     const allProducts = document.getElementById('all-products')
-     const bestSeller = document.getElementById('best-product')
-     const featuredProducts = document.getElementById('featured-product')
-
-      //all product
-	   allProducts.addEventListener('click', function allProducts () {
-
-		document.getElementById('products').innerHTML = `
-		 {% for product in products   %}
-            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12 special-grid " style="margin-bottom: 100px; ">
-                <div class="products-single fix">
-                    <div class="container hovereffect " id="products">
-                        {#<img alt="Image" class="img-fluid img-responsive" src="media/{{ product.image }}">#}
-                         <img alt="Image" class="img-fluid img-responsive mt-sm-5 mb-sm-5" src="{% static 'media/profiles/pc211007s5420Oh222510op-prod.jpg' %}">
-
-                        <div class="justify-content-center text-height" style="line-height: 0.5;">
-                            <p class=" ml-auto mt-1"><b>{% if product.discount_price %}
-                            <del>R {{ product.price }}</del>
-                                R {{ product.discount_price }} {% else %} R {{ product.price }} {% endif %}</b></p>
-                            <p> {{ product.description }}</p>
-                            <p> {{ product.title }}</p>
-                            <button class="card-link btn btn-outline-secondarys btn-responsive update-cart" data-action="add" data-product="{{ product.id }}"> Add to cart </button>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-            `;
-           location.reload()
-	    });
-
-
-    // featured Products
-	featuredProducts.addEventListener('click', function featuredProducts () {
-
-		document.getElementById('products').innerHTML = `
-		 {% for product in featured_product  %}
-            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12 special-grid " style="margin-bottom: 100px; ">
-                <div class="products-single fix">
-                    <div class="container hovereffect " id="products">
-                        {#<img alt="Image" class="img-fluid img-responsive" src="media/{{ product.image }}">#}
-                         <img alt="Image" class="img-fluid img-responsive mt-sm-5 mb-sm-5" src="{% static 'media/profiles/pc211007s5420Oh222510op-prod.jpg' %}">
-
-                        <div class="justify-content-center text-height" style="line-height: 0.5;">
-                            <p class=" ml-auto mt-1"><b>{% if product.discount_price %}
-                            <del>R {{ product.price }}</del>
-                                R {{ product.discount_price }} {% else %} R {{ product.price }} {% endif %}</b></p>
-                            <p> {{ product.description }}</p>
-                            <p> {{ product.title }}</p>
-                            <button class="card-link btn btn-outline-secondarys btn-responsive update-cart" data-action="add" data-product="{{ product.id }}"> Add to cart </button>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-            `;
-
-	    });
-
-	    //best seller
-	    bestSeller.addEventListener('click', function bestSeller () {
-
-		document.getElementById('products').innerHTML = `
-		 {% for product in best_product   %}
-            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12 special-grid " style="margin-bottom: 100px; ">
-                <div class="products-single fix">
-                    <div class="container hovereffect " id="products">
-                        {#<img alt="Image" class="img-fluid img-responsive" src="media/{{ product.image }}">#}
-                         <img alt="Image" class="img-fluid img-responsive mt-sm-5 mb-sm-5" src="{% static 'media/profiles/pc211007s5420Oh222510op-prod.jpg' %}">
-
-                        <div class="justify-content-center text-height" style="line-height: 0.5;">
-                            <p class=" ml-auto mt-1"><b>{% if product.discount_price %}
-                            <del>R {{ product.price }}</del>
-                                R {{ product.discount_price }} {% else %} R {{ product.price }} {% endif %}</b></p>
-                            <p> {{ product.description }}</p>
-                            <p> {{ product.title }}</p>
-                            <button  class="card-link btn btn-outline-secondarys btn-responsive update-cart" data-action="add" data-product="{{ product.id }}"> Add to cart </button>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-            `;
-	    });
-
-</script>
-{#% endcomment %#}
 {% endblock content %}

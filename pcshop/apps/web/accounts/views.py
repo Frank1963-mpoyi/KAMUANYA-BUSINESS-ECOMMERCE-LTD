@@ -1,20 +1,20 @@
 #from threading import Thread
 
-from django.contrib                                     import messages
-from django.contrib.auth                                import login, logout
-from django.shortcuts                                   import render, redirect
-from django.views.generic                               import View
+from django.contrib import messages
+from django.contrib.auth import login, logout
+from django.shortcuts import render, redirect
+from django.views.generic import View
 
-from .forms                                             import UserLoginForm, UserRegisterForm
-from .input                                             import input_post_input
-from pcshop.apps.web.store.lib                                      import products as product_lib
+from .forms import UserLoginForm, UserRegisterForm
+from .input import input_post_input
+from pcshop.apps.web.store.lib import products as product_lib
 
 
 class UserRegisterView(View):
     template_name = 'apps/accounts/register.html'
 
     def get(self, request, **kwargs):
-
+        
         data = product_lib.carData(request)
 
         cartItems = data['cartItems']
@@ -37,7 +37,7 @@ class UserRegisterView(View):
         if form.is_valid():
             new_user = form.save(commit=False)
 
-            new_user.username  = new_user.email
+            new_user.username = new_user.email
             new_user.is_active = True
             new_user.last_updated_by = new_user.username
 
@@ -50,9 +50,9 @@ class UserRegisterView(View):
         messages.warning(request, "You did not register please try again.")
 
         context = {
-            'i'             : i,
-            'page_name'     : 'home',
-            'register_form' : form,
+            'i': i,
+            'page_name': 'home',
+            'register_form': form,
         }
 
         return render(self.request, self.template_name, context)
@@ -67,12 +67,12 @@ class UserLoginView(View):
 
         cartItems = data['cartItems']
 
-        login_form    = UserLoginForm
+        login_form = UserLoginForm
 
         context = {
             'cartItems ': cartItems,
-            'login'     : 'login',
-            'login_form'    : login_form,
+            'login': 'login',
+            'login_form': login_form,
         }
 
         return render(self.request, self.template_name, context)
